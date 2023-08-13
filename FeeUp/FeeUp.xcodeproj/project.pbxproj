@@ -14,6 +14,8 @@
 		292E71F32A88DC6200E82933 /* FeeUpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292E71F22A88DC6200E82933 /* FeeUpTests.swift */; };
 		292E71FD2A88DC6200E82933 /* FeeUpUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292E71FC2A88DC6200E82933 /* FeeUpUITests.swift */; };
 		292E71FF2A88DC6200E82933 /* FeeUpUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292E71FE2A88DC6200E82933 /* FeeUpUITestsLaunchTests.swift */; };
+		292E720F2A88DE9800E82933 /* FeedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292E720E2A88DE9800E82933 /* FeedListViewController.swift */; };
+		292E72122A88DED100E82933 /* FeedRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292E72112A88DED100E82933 /* FeedRowView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,8 @@
 		292E71F82A88DC6200E82933 /* FeeUpUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FeeUpUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		292E71FC2A88DC6200E82933 /* FeeUpUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeeUpUITests.swift; sourceTree = "<group>"; };
 		292E71FE2A88DC6200E82933 /* FeeUpUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeeUpUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		292E720E2A88DE9800E82933 /* FeedListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedListViewController.swift; sourceTree = "<group>"; };
+		292E72112A88DED100E82933 /* FeedRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +98,7 @@
 		292E71E02A88DC6100E82933 /* FeeUp */ = {
 			isa = PBXGroup;
 			children = (
+				292E720B2A88DE6300E82933 /* Modules */,
 				292E71E12A88DC6100E82933 /* FeeUpApp.swift */,
 				292E71E32A88DC6100E82933 /* ContentView.swift */,
 				292E71E52A88DC6200E82933 /* Assets.xcassets */,
@@ -125,6 +130,31 @@
 				292E71FE2A88DC6200E82933 /* FeeUpUITestsLaunchTests.swift */,
 			);
 			path = FeeUpUITests;
+			sourceTree = "<group>";
+		};
+		292E720B2A88DE6300E82933 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				292E720D2A88DE7600E82933 /* FeedList */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		292E720D2A88DE7600E82933 /* FeedList */ = {
+			isa = PBXGroup;
+			children = (
+				292E72102A88DEB600E82933 /* View */,
+				292E720E2A88DE9800E82933 /* FeedListViewController.swift */,
+			);
+			path = FeedList;
+			sourceTree = "<group>";
+		};
+		292E72102A88DEB600E82933 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				292E72112A88DED100E82933 /* FeedRowView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,8 +287,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				292E720F2A88DE9800E82933 /* FeedListViewController.swift in Sources */,
 				292E71E42A88DC6100E82933 /* ContentView.swift in Sources */,
 				292E71E22A88DC6100E82933 /* FeeUpApp.swift in Sources */,
+				292E72122A88DED100E82933 /* FeedRowView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
