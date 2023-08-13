@@ -33,7 +33,7 @@ public extension RequestProtocol {
     }
 }
 
-extension RequestProtocol {
+public extension RequestProtocol {
     func createURLRequest() throws -> URLRequest {
         var components = URLComponents()
         components.scheme = "https"
