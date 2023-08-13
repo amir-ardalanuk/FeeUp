@@ -1,0 +1,262 @@
+[
+    {
+        "key": "ae",
+        "name": "United Arab Emirates",
+        "flag": "🇦🇪"
+    },
+    {
+        "key": "ar",
+        "name": "Argentina",
+        "flag": "🇦🇷"
+    },
+    {
+        "key": "at",
+        "name": "Austria",
+        "flag": "🇦🇹"
+    },
+    {
+        "key": "au",
+        "name": "Australia",
+        "flag": "🇦🇺"
+    },
+    {
+        "key": "be",
+        "name": "Belgium",
+        "flag": "🇧🇪"
+    },
+    {
+        "key": "bg",
+        "name": "Bulgaria",
+        "flag": "🇧🇬"
+    },
+    {
+        "key": "br",
+        "name": "Brazil",
+        "flag": "🇧🇷"
+    },
+    {
+        "key": "ca",
+        "name": "Canada",
+        "flag": "🇨🇦"
+    },
+    {
+        "key": "ch",
+        "name": "Switzerland",
+        "flag": "🇨🇭"
+    },
+    {
+        "key": "cn",
+        "name": "China",
+        "flag": "🇨🇳"
+    },
+    {
+        "key": "co",
+        "name": "Colombia",
+        "flag": "🇨🇴"
+    },
+    {
+        "key": "cz",
+        "name": "Czech Republic",
+        "flag": "🇨🇿"
+    },
+    {
+        "key": "de",
+        "name": "Germany",
+        "flag": "🇩🇪"
+    },
+    {
+        "key": "ee",
+        "name": "Estonia",
+        "flag": "🇪🇪"
+    },
+    {
+        "key": "eg",
+        "name": "Egypt",
+        "flag": "🇪🇬"
+    },
+    {
+        "key": "fr",
+        "name": "France",
+        "flag": "🇫🇷"
+    },
+    {
+        "key": "gb",
+        "name": "United Kingdom",
+        "flag": "🇬🇧"
+    },
+    {
+        "key": "gr",
+        "name": "Greece",
+        "flag": "🇬🇷"
+    },
+    {
+        "key": "hk",
+        "name": "Hong Kong",
+        "flag": "🇭🇰"
+    },
+    {
+        "key": "hu",
+        "name": "Hungary",
+        "flag": "🇭🇺"
+    },
+    {
+        "key": "id",
+        "name": "Indonesia",
+        "flag": "🇮🇩"
+    },
+    {
+        "key": "ie",
+        "name": "Ireland",
+        "flag": "🇮🇪"
+    },
+    {
+        "key": "il",
+        "name": "Israel",
+        "flag": "🇮🇱"
+    },
+    {
+        "key": "in",
+        "name": "India",
+        "flag": "🇮🇳"
+    },
+    {
+        "key": "it",
+        "name": "Italy",
+        "flag": "🇮🇹"
+    },
+    {
+        "key": "jp",
+        "name": "Japan",
+        "flag": "🇯🇵"
+    },
+    {
+        "key": "kr",
+        "name": "South Korea",
+        "flag": "🇰🇷"
+    },
+    {
+        "key": "lt",
+        "name": "Lithuania",
+        "flag": "🇱🇹"
+    },
+    {
+        "key": "lv",
+        "name": "Latvia",
+        "flag": "🇱🇻"
+    },
+    {
+        "key": "ma",
+        "name": "Morocco",
+        "flag": "🇲🇦"
+    },
+    {
+        "key": "mx",
+        "name": "Mexico",
+        "flag": "🇲🇽"
+    },
+    {
+        "key": "my",
+        "name": "Malaysia",
+        "flag": "🇲🇾"
+    },
+    {
+        "key": "ng",
+        "name": "Nigeria",
+        "flag": "🇳🇬"
+    },
+    {
+        "key": "nl",
+        "name": "Netherlands",
+        "flag": "🇳🇱"
+    },
+    {
+        "key": "nz",
+        "name": "New Zealand",
+        "flag": "🇳🇿"
+    },
+    {
+        "key": "ph",
+        "name": "Philippines",
+        "flag": "🇵🇭"
+    },
+    {
+        "key": "pl",
+        "name": "Poland",
+        "flag": "🇵🇱"
+    },
+    {
+        "key": "pt",
+        "name": "Portugal",
+        "flag": "🇵🇹"
+    },
+    {
+        "key": "pr",
+        "name": "Puerto Rico",
+        "flag": "🇵🇷"
+    },
+    {
+        "key": "ro",
+        "name": "Romania",
+        "flag": "🇷🇴"
+    },
+    {
+        "key": "ru",
+        "name": "Russia",
+        "flag": "🇷🇺"
+    },
+    {
+        "key": "sa",
+        "name": "Saudi Arabia",
+        "flag": "🇸🇦"
+    },
+    {
+        "key": "se",
+        "name": "Sweden",
+        "flag": "🇸🇪"
+    },
+    {
+        "key": "sg",
+        "name": "Singapore",
+        "flag": "🇸🇬"
+    },
+    {
+        "key": "sk",
+        "name": "Slovakia",
+        "flag": "🇸🇰"
+    },
+    {
+        "key": "th",
+        "name": "Thailand",
+        "flag": "🇹🇭"
+    },
+    {
+        "key": "tr",
+        "name": "Turkey",
+        "flag": "🇹🇷"
+    },
+    {
+        "key": "tw",
+        "name": "Taiwan",
+        "flag": "🇹🇼"
+    },
+    {
+        "key": "ua",
+        "name": "Ukraine",
+        "flag": "🇺🇦"
+    },
+    {
+        "key": "us",
+        "name": "United States",
+        "flag": "🇺🇸"
+    },
+    {
+        "key": "ve",
+        "name": "Venezuela",
+        "flag": "🇻🇪"
+    },
+    {
+        "key": "za",
+        "name": "South Africa",
+        "flag": "🇿🇦"
+    }
+]
