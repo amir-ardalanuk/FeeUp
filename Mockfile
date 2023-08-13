@@ -1,0 +1,12 @@
+sourceryCommand: mint run sourcery
+sourceryTemplate: null
+
+NetworkTests:
+  sources:
+    include:
+    - ./FeeUp/LocalPackages/Packages/Sources/Network
+  output: ./FeeUp/LocalPackages/Packages/Tests/NetworkTests/Mocks/NetworkMock.generated.swift
+  testable:
+  - Network
+  import:
+  - Foundation

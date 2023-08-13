@@ -16,8 +16,7 @@ let package = Package(
             targets: ["Network"]),
     ],
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
+        .package(url: "https://github.com/MakeAWishFoundation/SwiftyMocky", from: "4.2.0"),
     ],
     targets: [
         .target(
@@ -31,6 +30,6 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "NetworkTests",
-            dependencies: ["Network"]),
+            dependencies: ["Network", "SwiftyMocky"]),
     ]
 )

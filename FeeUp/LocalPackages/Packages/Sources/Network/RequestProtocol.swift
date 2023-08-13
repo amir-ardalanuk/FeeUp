@@ -1,5 +1,6 @@
 import Foundation
 
+//sourcery: AutoMockable
 /// A protocol defining the contract for a request.
 public protocol RequestProtocol {
     var host: String { get }
@@ -8,6 +9,8 @@ public protocol RequestProtocol {
     var params: [String: Any] { get }
     var urlParams: [String: String?] { get }
     var requestType: RequestType { get }
+
+    func createURLRequest() throws -> URLRequest
 }
 
 /// An enumeration representing the HTTP request types.

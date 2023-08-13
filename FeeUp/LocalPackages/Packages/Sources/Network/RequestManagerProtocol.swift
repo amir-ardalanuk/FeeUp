@@ -1,5 +1,6 @@
 import Foundation
 
+//sourcery: AutoMockable
 /// A protocol defining the contract for a request manager.
 public protocol RequestManagerProtocol {
     /// Performs the specified request and returns the decoded response object.
