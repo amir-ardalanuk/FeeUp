@@ -1,13 +1,13 @@
 import Foundation
 
 /// An enumeration representing possible network-related errors.
-enum NetworkError: Error, Equatable, CustomStringConvertible {
+public enum NetworkError: Error, Equatable, CustomStringConvertible {
     case invalidURL
     case invalidServerResponse(Data?)
     case ServerError(ServerError)
     case failedParsingData
 
-    var description: String {
+    public var description: String {
         switch self {
         case .invalidURL:
             return "Invalid URL"
@@ -22,7 +22,7 @@ enum NetworkError: Error, Equatable, CustomStringConvertible {
 }
 
 /// A structure representing a server error response.
-struct ServerError: Decodable, Hashable, Equatable {
-    let success: Bool
-    let message: String
+public struct ServerError: Codable, Hashable, Equatable {
+    public let success: Bool
+    public let message: String
 }

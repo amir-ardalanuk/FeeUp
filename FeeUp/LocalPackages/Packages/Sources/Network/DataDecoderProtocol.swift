@@ -1,5 +1,6 @@
 import Foundation
 
+//sourcery: AutoMockable
 /// A protocol defining the contract for a data decoder.
 public protocol DataDecoderProtocol {
     /// Decodes the given data into an instance of the specified type.
