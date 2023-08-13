@@ -2,7 +2,7 @@ import Network
 import Domain
 
 enum FeedRequest {
-    case topHeadlines(TopHeadlines)
+    case topHeadlines(FeedQuery)
 }
 
 extension FeedRequest: RequestProtocol {
