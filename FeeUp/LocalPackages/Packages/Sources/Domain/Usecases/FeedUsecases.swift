@@ -1,8 +1,12 @@
 import Foundation
 
-protocol FeedUsecases {
+public protocol FeedUsecases {
     func fetchLatest(withSearch: String?, page: Int, pageSize: Int) async throws -> [News]
     func filter(country: String?, category: String?) async throws -> [News]
+    func countries() async throws -> [FeedCountries]
+}
+
+public protocol FeedBookmarkUsecases {
     func bookmark(news: News) async throws
     func removeBookmark(newsId: String) async throws
 }
