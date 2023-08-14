@@ -4,7 +4,7 @@ import Foundation
 public enum NetworkError: Error, Equatable, CustomStringConvertible {
     case invalidURL
     case invalidServerResponse(Data?)
-    case ServerError(ServerError)
+    case serverError(ServerError)
     case failedParsingData
 
     public var description: String {
@@ -13,7 +13,7 @@ public enum NetworkError: Error, Equatable, CustomStringConvertible {
             return "Invalid URL"
         case .invalidServerResponse(let data):
             return "Invalid Server Response with \(String(data: data ?? .init(), encoding: .utf8) ?? "-")"
-        case .ServerError(let serverError):
+        case .serverError(let serverError):
             return serverError.message
         case .failedParsingData:
             return "Failed Parsing Data"
@@ -25,4 +25,9 @@ public enum NetworkError: Error, Equatable, CustomStringConvertible {
 public struct ServerError: Codable, Hashable, Equatable {
     public let success: Bool
     public let message: String
+
+    public init(success: Bool, message: String) {
+        self.success = success
+        self.message = message
+    }
 }

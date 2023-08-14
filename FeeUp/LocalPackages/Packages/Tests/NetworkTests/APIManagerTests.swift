@@ -1,5 +1,6 @@
 import XCTest
 import Foundation
+import Mocks
 @testable import Network
 
 class APIManagerTests: XCTestCase {

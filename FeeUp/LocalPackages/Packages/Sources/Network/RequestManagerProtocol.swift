@@ -35,7 +35,7 @@ public final class RequestManager: RequestManagerProtocol {
                 switch network {
                 case let .invalidServerResponse(data):
                     let serverError = try decoder.decode(data ?? .init(), type: ServerError.self)
-                    throw NetworkError.ServerError(serverError)
+                    throw NetworkError.serverError(serverError)
                 default:
                     throw error
                 }

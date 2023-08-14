@@ -5,8 +5,19 @@ NetworkTests:
   sources:
     include:
     - ./FeeUp/LocalPackages/Packages/Sources/Network
-  output: ./FeeUp/LocalPackages/Packages/Tests/NetworkTests/Mocks/NetworkMock.generated.swift
+  output: ./FeeUp/LocalPackages/Packages/Sources/Mocks/Network/NetworkMock.generated.swift
   testable:
   - Network
   import:
   - Foundation
+
+APITests:
+  sources:
+    include:
+    - ./FeeUp/LocalPackages/Packages/Sources/API
+  output: ./FeeUp/LocalPackages/Packages/Sources/Mocks/API/APIMock.generated.swift
+  testable:
+  - API
+  import:
+  - Foundation
+  - Network

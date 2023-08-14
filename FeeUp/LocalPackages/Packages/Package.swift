@@ -17,6 +17,9 @@ let package = Package(
         .library(
             name: "API",
             targets: ["API"]),
+        .library(
+            name: "Mocks",
+            targets: ["Mocks"]),
     ],
     dependencies: [
         .package(url: "https://github.com/MakeAWishFoundation/SwiftyMocky", from: "4.2.0"),
@@ -33,7 +36,7 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "NetworkTests",
-            dependencies: ["Network", "SwiftyMocky"]),
+            dependencies: ["Network", "SwiftyMocky", "Mocks"]),
         .target(
             name: "API",
             dependencies: ["Network", "Domain"],
@@ -41,6 +44,10 @@ let package = Package(
         ),
         .testTarget(
             name: "APITests",
-            dependencies: ["API"])
+            dependencies: ["API", "Mocks", "SwiftyMocky"]),
+        .target(
+            name: "Mocks",
+            dependencies: ["Network", "Domain", "API", "SwiftyMocky"]
+        ),
     ]
 )

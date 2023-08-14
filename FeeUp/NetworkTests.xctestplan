@@ -18,6 +18,13 @@
         "identifier" : "NetworkTests",
         "name" : "NetworkTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "APITests",
+        "name" : "APITests"
+      }
     }
   ],
   "version" : 1

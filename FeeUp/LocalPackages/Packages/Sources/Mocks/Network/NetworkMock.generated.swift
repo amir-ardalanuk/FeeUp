@@ -644,6 +644,11 @@ open class RequestManagerProtocolMock: RequestManagerProtocol, Mock {
         if scopes.contains(.perform) { methodPerformValues = [] }
     }
 
+    public var decoder: DataDecoderProtocol {
+		get {	invocations.append(.p_decoder_get); return __p_decoder ?? givenGetterValue(.p_decoder_get, "RequestManagerProtocolMock - stub value for decoder was not defined") }
+	}
+	private var __p_decoder: (DataDecoderProtocol)?
+
 
 
 
@@ -668,6 +673,7 @@ open class RequestManagerProtocolMock: RequestManagerProtocol, Mock {
 
     fileprivate enum MethodType {
         case m_perform__request(Parameter<RequestProtocol>)
+        case p_decoder_get
 
         static func compareParameters(lhs: MethodType, rhs: MethodType, matcher: Matcher) -> Matcher.ComparisonResult {
             switch (lhs, rhs) {
@@ -675,17 +681,21 @@ open class RequestManagerProtocolMock: RequestManagerProtocol, Mock {
 				var results: [Matcher.ParameterComparisonResult] = []
 				results.append(Matcher.ParameterComparisonResult(Parameter.compare(lhs: lhsRequest, rhs: rhsRequest, with: matcher), lhsRequest, rhsRequest, "_ request"))
 				return Matcher.ComparisonResult(results)
+            case (.p_decoder_get,.p_decoder_get): return Matcher.ComparisonResult.match
+            default: return .none
             }
         }
 
         func intValue() -> Int {
             switch self {
             case let .m_perform__request(p0): return p0.intValue
+            case .p_decoder_get: return 0
             }
         }
         func assertionName() -> String {
             switch self {
             case .m_perform__request: return ".perform(_:)"
+            case .p_decoder_get: return "[get] .decoder"
             }
         }
     }
@@ -698,6 +708,9 @@ open class RequestManagerProtocolMock: RequestManagerProtocol, Mock {
             super.init(products)
         }
 
+        public static func decoder(getter defaultValue: DataDecoderProtocol...) -> PropertyStub {
+            return Given(method: .p_decoder_get, products: defaultValue.map({ StubProduct.return($0 as Any) }))
+        }
 
         @discardableResult
 		public static func perform<T: Decodable>(_ request: Parameter<RequestProtocol>, willReturn: T...) -> MethodStub {
@@ -722,6 +735,7 @@ open class RequestManagerProtocolMock: RequestManagerProtocol, Mock {
 
         @discardableResult
 		public static func perform(_ request: Parameter<RequestProtocol>) -> Verify { return Verify(method: .m_perform__request(`request`))}
+        public static var decoder: Verify { return Verify(method: .p_decoder_get) }
     }
 
     public struct Perform {
