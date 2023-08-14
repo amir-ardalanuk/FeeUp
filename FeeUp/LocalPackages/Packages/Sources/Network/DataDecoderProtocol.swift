@@ -18,7 +18,7 @@ public final class JsonDecoder: DataDecoderProtocol {
 
     /// Initializes a new instance of the JSON decoder with an optional custom JSON decoder.
     /// - Parameter decoder: The JSON decoder to use. If not provided, a default JSON decoder is used.
-    init(decoder: JSONDecoder = .init()) {
+    public init(decoder: JSONDecoder = .init()) {
         self.decoder = decoder
     }
 

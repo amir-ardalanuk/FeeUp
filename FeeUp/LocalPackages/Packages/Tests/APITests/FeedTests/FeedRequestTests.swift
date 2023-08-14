@@ -1,6 +1,7 @@
 import XCTest
 import Foundation
 import Domain
+import Network
 @testable import API
 
 class FeedRequestTests: XCTestCase {

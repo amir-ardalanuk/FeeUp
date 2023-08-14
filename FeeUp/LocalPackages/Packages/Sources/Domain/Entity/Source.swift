@@ -10,5 +10,4 @@ public struct Source: Hashable, Codable {
         self.id = id
         self.name = name
     }
-
 }

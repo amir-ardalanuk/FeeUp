@@ -11,7 +11,7 @@ public struct News: Codable, Hashable {
     public let publishedAt: Date
     public let content: String
 
-    init(source: Source, author: String? = nil, title: String, description: String, url: String, urlToImage: String? = nil, publishedAt: Date, content: String) {
+    public init(source: Source, author: String? = nil, title: String, description: String, url: String, urlToImage: String? = nil, publishedAt: Date, content: String) {
         self.source = source
         self.author = author
         self.title = title

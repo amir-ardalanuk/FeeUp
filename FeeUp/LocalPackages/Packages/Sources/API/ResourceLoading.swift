@@ -3,6 +3,8 @@ import Foundation
 enum ResourceLoadingError: Error {
     case thereIsNotSuchFile
 }
+
+//sourcery: AutoMockable
 public protocol ResourceLoading {
     func data(forResource: String?, withExtension: String?) throws -> Data?
 }

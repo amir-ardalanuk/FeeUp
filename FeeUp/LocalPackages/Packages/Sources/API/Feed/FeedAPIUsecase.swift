@@ -3,6 +3,10 @@ import Network
 import Domain
 
 final class FeedAPIUsecases: FeedUsecases {
+    enum Constant {
+        static let countryJsonFileName = "countries"
+        static let countryJsonFileExt = "json"
+    }
     private let requestManager: RequestManagerProtocol
     private let resourceLoader: ResourceLoading
 
@@ -18,7 +22,7 @@ final class FeedAPIUsecases: FeedUsecases {
     }
 
     func countries() async throws -> Domain.FeedCountries {
-        guard let jsonData = try resourceLoader.data(forResource: "countries", withExtension: "json") else {
+        guard let jsonData = try resourceLoader.data(forResource: Constant.countryJsonFileName, withExtension: Constant.countryJsonFileExt) else {
             #if DEBUG
             fatalError("Can't find the file")
             #else
