@@ -84,7 +84,6 @@ extension FeedAPIUsecasesTests {
     }
 
     func test_countries_whenLoaderCantFindAFile() async throws {
-        let stubData = provideCountryData()
         let localError = NSError(domain: "can't find a file", code: 404)
         resourceLoadingMock.given(.data(forResource: .value(FeedAPIUsecases.Constant.countryJsonFileName), withExtension: .value(FeedAPIUsecases.Constant.countryJsonFileExt), willThrow: localError))
         do {
