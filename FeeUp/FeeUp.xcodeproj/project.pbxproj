@@ -80,7 +80,6 @@
 		292E71D52A88DC6100E82933 = {
 			isa = PBXGroup;
 			children = (
-				29FAA94A2A890EF5003A9440 /* NetworkTests.xctestplan */,
 				29FAA9492A88E9CB003A9440 /* LocalPackages */,
 				292E71E02A88DC6100E82933 /* FeeUp */,
 				292E71F12A88DC6200E82933 /* FeeUpTests */,
@@ -164,6 +163,7 @@
 		29FAA9492A88E9CB003A9440 /* LocalPackages */ = {
 			isa = PBXGroup;
 			children = (
+				29FAA94A2A890EF5003A9440 /* NetworkTests.xctestplan */,
 				29FAA9482A88E9C7003A9440 /* Packages */,
 			);
 			path = LocalPackages;

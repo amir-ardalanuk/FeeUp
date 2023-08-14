@@ -13,7 +13,7 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <TestPlans>
          <TestPlanReference
-            reference = "container:../../NetworkTests.xctestplan"
+            reference = "container:../NetworkTests.xctestplan"
             default = "YES">
          </TestPlanReference>
       </TestPlans>
