@@ -23,6 +23,9 @@ let package = Package(
         .library(
             name: "Persistence",
             targets: ["Persistence"]),
+        .library(
+            name: "Repository",
+            targets: ["Repository"]),
     ],
     dependencies: [
         .package(url: "https://github.com/MakeAWishFoundation/SwiftyMocky", from: "4.2.0"),
@@ -59,5 +62,12 @@ let package = Package(
         .testTarget(
             name: "PersistenceTests",
             dependencies: ["Persistence", "Mocks", "SwiftyMocky"]),
+        .target(
+            name: "Repository",
+            dependencies: ["Domain", "Persistence", "API"]
+        ),
+        .testTarget(
+            name: "RepositoryTests",
+            dependencies: ["Repository", "Mocks", "SwiftyMocky"]),
     ]
 )
