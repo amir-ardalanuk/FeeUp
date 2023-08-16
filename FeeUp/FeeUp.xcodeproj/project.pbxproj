@@ -14,8 +14,17 @@
 		292E71F32A88DC6200E82933 /* FeeUpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292E71F22A88DC6200E82933 /* FeeUpTests.swift */; };
 		292E71FD2A88DC6200E82933 /* FeeUpUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292E71FC2A88DC6200E82933 /* FeeUpUITests.swift */; };
 		292E71FF2A88DC6200E82933 /* FeeUpUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292E71FE2A88DC6200E82933 /* FeeUpUITestsLaunchTests.swift */; };
-		292E720F2A88DE9800E82933 /* FeedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292E720E2A88DE9800E82933 /* FeedListViewController.swift */; };
 		292E72122A88DED100E82933 /* FeedRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292E72112A88DED100E82933 /* FeedRowView.swift */; };
+		29C229122A8D05EF00D85333 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C229112A8D05EF00D85333 /* ViewModel.swift */; };
+		29C229142A8D05FA00D85333 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C229132A8D05FA00D85333 /* State.swift */; };
+		29C229162A8D069F00D85333 /* FeedListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C229152A8D069F00D85333 /* FeedListView.swift */; };
+		29C229192A8D06CA00D85333 /* FeedListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C229182A8D06CA00D85333 /* FeedListViewModel.swift */; };
+		29C2291B2A8D077500D85333 /* FeedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2291A2A8D077500D85333 /* FeedList.swift */; };
+		29C2291E2A8D07B000D85333 /* API in Frameworks */ = {isa = PBXBuildFile; productRef = 29C2291D2A8D07B000D85333 /* API */; };
+		29C229202A8D07B000D85333 /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = 29C2291F2A8D07B000D85333 /* Domain */; };
+		29C229222A8D07B000D85333 /* Network in Frameworks */ = {isa = PBXBuildFile; productRef = 29C229212A8D07B000D85333 /* Network */; };
+		29C229242A8D07B000D85333 /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = 29C229232A8D07B000D85333 /* Persistence */; };
+		29C229262A8D07B000D85333 /* Repository in Frameworks */ = {isa = PBXBuildFile; productRef = 29C229252A8D07B000D85333 /* Repository */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,8 +55,12 @@
 		292E71F82A88DC6200E82933 /* FeeUpUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FeeUpUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		292E71FC2A88DC6200E82933 /* FeeUpUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeeUpUITests.swift; sourceTree = "<group>"; };
 		292E71FE2A88DC6200E82933 /* FeeUpUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeeUpUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		292E720E2A88DE9800E82933 /* FeedListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedListViewController.swift; sourceTree = "<group>"; };
 		292E72112A88DED100E82933 /* FeedRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRowView.swift; sourceTree = "<group>"; };
+		29C229112A8D05EF00D85333 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		29C229132A8D05FA00D85333 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
+		29C229152A8D069F00D85333 /* FeedListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedListView.swift; sourceTree = "<group>"; };
+		29C229182A8D06CA00D85333 /* FeedListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedListViewModel.swift; sourceTree = "<group>"; };
+		29C2291A2A8D077500D85333 /* FeedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedList.swift; sourceTree = "<group>"; };
 		29FAA9482A88E9C7003A9440 /* Packages */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Packages; sourceTree = "<group>"; };
 		29FAA94A2A890EF5003A9440 /* NetworkTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = NetworkTests.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -57,6 +70,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29C229242A8D07B000D85333 /* Persistence in Frameworks */,
+				29C229222A8D07B000D85333 /* Network in Frameworks */,
+				29C229262A8D07B000D85333 /* Repository in Frameworks */,
+				29C229202A8D07B000D85333 /* Domain in Frameworks */,
+				29C2291E2A8D07B000D85333 /* API in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +103,7 @@
 				292E71F12A88DC6200E82933 /* FeeUpTests */,
 				292E71FB2A88DC6200E82933 /* FeeUpUITests */,
 				292E71DF2A88DC6100E82933 /* Products */,
+				29C2291C2A8D07B000D85333 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,6 +120,7 @@
 		292E71E02A88DC6100E82933 /* FeeUp */ = {
 			isa = PBXGroup;
 			children = (
+				29C229102A8D05E600D85333 /* Base */,
 				292E720B2A88DE6300E82933 /* Modules */,
 				292E71E12A88DC6100E82933 /* FeeUpApp.swift */,
 				292E71E32A88DC6100E82933 /* ContentView.swift */,
@@ -147,7 +167,9 @@
 			isa = PBXGroup;
 			children = (
 				292E72102A88DEB600E82933 /* View */,
-				292E720E2A88DE9800E82933 /* FeedListViewController.swift */,
+				29C229152A8D069F00D85333 /* FeedListView.swift */,
+				29C229182A8D06CA00D85333 /* FeedListViewModel.swift */,
+				29C2291A2A8D077500D85333 /* FeedList.swift */,
 			);
 			path = FeedList;
 			sourceTree = "<group>";
@@ -158,6 +180,22 @@
 				292E72112A88DED100E82933 /* FeedRowView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		29C229102A8D05E600D85333 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				29C229112A8D05EF00D85333 /* ViewModel.swift */,
+				29C229132A8D05FA00D85333 /* State.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		29C2291C2A8D07B000D85333 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		29FAA9492A88E9CB003A9440 /* LocalPackages */ = {
@@ -185,6 +223,13 @@
 			dependencies = (
 			);
 			name = FeeUp;
+			packageProductDependencies = (
+				29C2291D2A8D07B000D85333 /* API */,
+				29C2291F2A8D07B000D85333 /* Domain */,
+				29C229212A8D07B000D85333 /* Network */,
+				29C229232A8D07B000D85333 /* Persistence */,
+				29C229252A8D07B000D85333 /* Repository */,
+			);
 			productName = FeeUp;
 			productReference = 292E71DE2A88DC6100E82933 /* FeeUp.app */;
 			productType = "com.apple.product-type.application";
@@ -299,10 +344,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				292E720F2A88DE9800E82933 /* FeedListViewController.swift in Sources */,
+				29C229122A8D05EF00D85333 /* ViewModel.swift in Sources */,
+				29C2291B2A8D077500D85333 /* FeedList.swift in Sources */,
 				292E71E42A88DC6100E82933 /* ContentView.swift in Sources */,
+				29C229192A8D06CA00D85333 /* FeedListViewModel.swift in Sources */,
 				292E71E22A88DC6100E82933 /* FeeUpApp.swift in Sources */,
+				29C229162A8D069F00D85333 /* FeedListView.swift in Sources */,
 				292E72122A88DED100E82933 /* FeedRowView.swift in Sources */,
+				29C229142A8D05FA00D85333 /* State.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -627,6 +676,29 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		29C2291D2A8D07B000D85333 /* API */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = API;
+		};
+		29C2291F2A8D07B000D85333 /* Domain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Domain;
+		};
+		29C229212A8D07B000D85333 /* Network */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Network;
+		};
+		29C229232A8D07B000D85333 /* Persistence */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Persistence;
+		};
+		29C229252A8D07B000D85333 /* Repository */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Repository;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 292E71D62A88DC6100E82933 /* Project object */;
 }
