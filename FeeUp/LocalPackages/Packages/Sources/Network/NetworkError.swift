@@ -14,7 +14,7 @@ public enum NetworkError: Error, Equatable, CustomStringConvertible {
         case .invalidServerResponse(let data):
             return "Invalid Server Response with \(String(data: data ?? .init(), encoding: .utf8) ?? "-")"
         case .serverError(let serverError):
-            return serverError.message
+            return serverError.message ?? "Unknown error"
         case .failedParsingData:
             return "Failed Parsing Data"
         }
@@ -23,11 +23,11 @@ public enum NetworkError: Error, Equatable, CustomStringConvertible {
 
 /// A structure representing a server error response.
 public struct ServerError: Codable, Hashable, Equatable {
-    public let success: Bool
-    public let message: String
+    public let status: String?
+    public let message: String?
 
-    public init(success: Bool, message: String) {
-        self.success = success
+    public init(status: String?, message: String) {
+        self.status = status
         self.message = message
     }
 }

@@ -37,7 +37,7 @@ final class FeedListViewModel: ViewModel {
         self.feedUsecases = feedUsecases
         self.stateSubject = .init(.init(newsList: [], isLoadingList: true, search: nil))
         self.destinationSubject = .init()
-        self.currentQuery = .init()
+        self.currentQuery = .init(country: .init(key: "us", name: "USA", flag: ""))
     }
 
     func handle(action: FeedList.Action) {
@@ -53,7 +53,9 @@ final class FeedListViewModel: ViewModel {
         Task {
             do {
                 let result = try await feedUsecases.fetchLatest(query: currentQuery)
-                stateSubject.value.update { $0.newsList = result }
+                await MainActor.run {
+                    stateSubject.value.update { $0.newsList = result }
+                }
             } catch {
                 print(error)
             }

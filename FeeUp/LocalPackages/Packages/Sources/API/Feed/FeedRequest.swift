@@ -23,7 +23,8 @@ extension FeedRequest: RequestProtocol {
         switch self {
         case let .topHeadlines(model):
             param["pageSize"] = "\(model.pageSize)"
-            param["page"] = "\(model.pageSize)"
+            param["page"] = "\(model.page)"
+            param["country"] = model.country.key
 
             if let q = model.query {
                 param["q"] = q
@@ -33,9 +34,7 @@ extension FeedRequest: RequestProtocol {
                 param["category"] = category.rawValue
             }
 
-            if let country = model.country {
-                param["country"] = country.key
-            }
+
         }
         return param
     }

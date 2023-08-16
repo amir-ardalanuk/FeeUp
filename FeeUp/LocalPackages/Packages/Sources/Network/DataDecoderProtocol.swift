@@ -20,6 +20,7 @@ public final class JsonDecoder: DataDecoderProtocol {
     /// - Parameter decoder: The JSON decoder to use. If not provided, a default JSON decoder is used.
     public init(decoder: JSONDecoder = .init()) {
         self.decoder = decoder
+        self.decoder.dateDecodingStrategy = .iso8601
     }
 
     public func decode<T>(_ data: Data, type: T.Type) throws -> T where T: Decodable {

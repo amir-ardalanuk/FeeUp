@@ -9,7 +9,7 @@ public struct News: Codable, Hashable {
     public let url: String
     public let urlToImage: String?
     public let publishedAt: Date
-    public let content: String
+    public let content: String?
 
     public init(source: Source, author: String? = nil, title: String, description: String, url: String, urlToImage: String? = nil, publishedAt: Date, content: String) {
         self.source = source

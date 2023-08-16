@@ -40,7 +40,7 @@ extension FeedAPIUsecasesTests {
         let query: FeedQuery = .init()
         let request = FeedRequest.topHeadlines(query)
         let news = News.stub()
-        let serverResponse = ServerResponse(status: "success", totalResults: 1, articles: [news])
+        let serverResponse = ServerResponse(status: "success", totalResults: 1, message: nil, articles: [news])
         requestManagerMock.given(.perform(.value(request), willReturn: serverResponse))
         let result = try await sut.fetchLatest(query: query)
         XCTAssertEqual(result, [news])
@@ -49,7 +49,7 @@ extension FeedAPIUsecasesTests {
     func test_fetchLatest_whenNetworkThrowAnError() async throws {
         let query: FeedQuery = .init()
         let request = FeedRequest.topHeadlines(query)
-        let serverError = ServerError(success: false, message: "try again later")
+        let serverError = ServerError(status: "error", message: "try again later")
         let networkError = NetworkError.serverError(serverError)
         requestManagerMock.given(.perform(.value(request), willThrow: networkError))
         do {

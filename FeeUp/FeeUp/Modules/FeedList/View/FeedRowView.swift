@@ -39,7 +39,7 @@ struct FeedRowView: View {
                         .font(.subheadline)
                         .foregroundColor(.gray)
                     Spacer()
-                    Text(news.source.name)
+                    Text(news.source.name ?? "-")
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }

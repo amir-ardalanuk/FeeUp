@@ -28,7 +28,7 @@ public final class FeedAPIUsecases: FeedAPIProtocol {
 
     public func fetchLatest(query: Domain.FeedQuery) async throws -> [Domain.News] {
         let response: ServerResponse<[News]> = try await requestManager.perform(FeedRequest.topHeadlines(query))
-        return response.articles
+        return response.articles ?? []
     }
 
     public func countries() async throws -> Domain.FeedCountries {
