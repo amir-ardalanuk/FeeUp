@@ -4,20 +4,32 @@ sourceryTemplate: null
 NetworkTests:
   sources:
     include:
-    - ./FeeUp/LocalPackages/Packages/Sources/Network
+      - ./FeeUp/LocalPackages/Packages/Sources/Network
   output: ./FeeUp/LocalPackages/Packages/Sources/Mocks/Network/NetworkMock.generated.swift
   testable:
-  - Network
+    - Network
   import:
-  - Foundation
+    - Foundation
 
 APITests:
   sources:
     include:
-    - ./FeeUp/LocalPackages/Packages/Sources/API
+      - ./FeeUp/LocalPackages/Packages/Sources/API
   output: ./FeeUp/LocalPackages/Packages/Sources/Mocks/API/APIMock.generated.swift
   testable:
-  - API
+    - API
   import:
-  - Foundation
-  - Network
+    - Foundation
+    - Network
+    - Domain
+
+PersistenceTests:
+  sources:
+    include:
+      - ./FeeUp/LocalPackages/Packages/Sources/Persistence
+  output: ./FeeUp/LocalPackages/Packages/Sources/Mocks/Persistence/PersistenceMock.generated.swift
+  testable:
+    - Persistence
+  import:
+    - Foundation
+    - Domain

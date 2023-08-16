@@ -32,6 +32,13 @@
         "identifier" : "PersistenceTests",
         "name" : "PersistenceTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "RepositoryTests",
+        "name" : "RepositoryTests"
+      }
     }
   ],
   "version" : 1
