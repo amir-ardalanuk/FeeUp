@@ -25,6 +25,8 @@
 		29C229222A8D07B000D85333 /* Network in Frameworks */ = {isa = PBXBuildFile; productRef = 29C229212A8D07B000D85333 /* Network */; };
 		29C229242A8D07B000D85333 /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = 29C229232A8D07B000D85333 /* Persistence */; };
 		29C229262A8D07B000D85333 /* Repository in Frameworks */ = {isa = PBXBuildFile; productRef = 29C229252A8D07B000D85333 /* Repository */; };
+		29C229292A8D115B00D85333 /* AppDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C229282A8D115B00D85333 /* AppDependencies.swift */; };
+		29C2292B2A8D125F00D85333 /* DependencyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2292A2A8D125F00D85333 /* DependencyManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		29C229152A8D069F00D85333 /* FeedListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedListView.swift; sourceTree = "<group>"; };
 		29C229182A8D06CA00D85333 /* FeedListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedListViewModel.swift; sourceTree = "<group>"; };
 		29C2291A2A8D077500D85333 /* FeedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedList.swift; sourceTree = "<group>"; };
+		29C229282A8D115B00D85333 /* AppDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependencies.swift; sourceTree = "<group>"; };
+		29C2292A2A8D125F00D85333 /* DependencyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyManager.swift; sourceTree = "<group>"; };
 		29FAA9482A88E9C7003A9440 /* Packages */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Packages; sourceTree = "<group>"; };
 		29FAA94A2A890EF5003A9440 /* NetworkTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = NetworkTests.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,6 +124,7 @@
 		292E71E02A88DC6100E82933 /* FeeUp */ = {
 			isa = PBXGroup;
 			children = (
+				29C229272A8D114000D85333 /* AppDependencies */,
 				29C229102A8D05E600D85333 /* Base */,
 				292E720B2A88DE6300E82933 /* Modules */,
 				292E71E12A88DC6100E82933 /* FeeUpApp.swift */,
@@ -196,6 +201,15 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		29C229272A8D114000D85333 /* AppDependencies */ = {
+			isa = PBXGroup;
+			children = (
+				29C229282A8D115B00D85333 /* AppDependencies.swift */,
+				29C2292A2A8D125F00D85333 /* DependencyManager.swift */,
+			);
+			path = AppDependencies;
 			sourceTree = "<group>";
 		};
 		29FAA9492A88E9CB003A9440 /* LocalPackages */ = {
@@ -350,7 +364,9 @@
 				29C229192A8D06CA00D85333 /* FeedListViewModel.swift in Sources */,
 				292E71E22A88DC6100E82933 /* FeeUpApp.swift in Sources */,
 				29C229162A8D069F00D85333 /* FeedListView.swift in Sources */,
+				29C229292A8D115B00D85333 /* AppDependencies.swift in Sources */,
 				292E72122A88DED100E82933 /* FeedRowView.swift in Sources */,
+				29C2292B2A8D125F00D85333 /* DependencyManager.swift in Sources */,
 				29C229142A8D05FA00D85333 /* State.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

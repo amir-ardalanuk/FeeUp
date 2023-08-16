@@ -9,7 +9,7 @@ public protocol FeedPersistencing {
     func isBookmarked(newsURL: String) throws -> Bool
 }
 
-final class UserDefaultsFeedPersistence: FeedPersistencing {
+public final class UserDefaultsFeedPersistence: FeedPersistencing {
     enum Constant {
         static let newsKey = "NewsList"
     }

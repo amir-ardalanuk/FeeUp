@@ -2,7 +2,7 @@ import Foundation
 
 //sourcery: AutoMockable
 /// A protocol defining the contract for an API manager.
-protocol APIManagerProtocol {
+public protocol APIManagerProtocol {
     /// Performs the specified request and returns the response data.
     /// - Parameters:
     ///   - request: The request to perform.
@@ -12,16 +12,16 @@ protocol APIManagerProtocol {
 }
 
 /// An API manager implementation for performing network requests.
-final class APIManager: APIManagerProtocol {
+public final class APIManager: APIManagerProtocol {
     private let network: Networking
 
     /// Initializes a new instance of the API manager with an optional custom URLSession.
     /// - Parameter urlSession: The URLSession to use. If not provided, a shared URLSession is used.
-    init(network: Networking = URLSession.shared) {
+    public init(network: Networking = URLSession.shared) {
         self.network = network
     }
 
-    func perform(_ request: RequestProtocol) async throws -> Data {
+    public func perform(_ request: RequestProtocol) async throws -> Data {
         let requestURL = try request.createURLRequest()
         let (data, response) = try await network.data(for: requestURL)
 

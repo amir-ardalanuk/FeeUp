@@ -8,7 +8,7 @@ public protocol FeedAPIProtocol {
     func countries() async throws -> Domain.FeedCountries
 }
 
-final class FeedAPIUsecases: FeedAPIProtocol {
+public final class FeedAPIUsecases: FeedAPIProtocol {
     enum Constant {
         static let countryJsonFileName = "countries"
         static let countryJsonFileExt = "json"
@@ -16,17 +16,22 @@ final class FeedAPIUsecases: FeedAPIProtocol {
     private let requestManager: RequestManagerProtocol
     private let resourceLoader: ResourceLoading
 
-    public init(requestManager: RequestManagerProtocol, resourceLoader: ResourceLoading) {
+    public init(requestManager: RequestManagerProtocol) {
+        self.requestManager = requestManager
+        self.resourceLoader = Bundle.module
+    }
+
+    init(requestManager: RequestManagerProtocol, resourceLoader: ResourceLoading) {
         self.requestManager = requestManager
         self.resourceLoader = resourceLoader
     }
 
-    func fetchLatest(query: Domain.FeedQuery) async throws -> [Domain.News] {
+    public func fetchLatest(query: Domain.FeedQuery) async throws -> [Domain.News] {
         let response: ServerResponse<[News]> = try await requestManager.perform(FeedRequest.topHeadlines(query))
         return response.articles
     }
 
-    func countries() async throws -> Domain.FeedCountries {
+    public func countries() async throws -> Domain.FeedCountries {
         guard let jsonData = try resourceLoader.data(forResource: Constant.countryJsonFileName, withExtension: Constant.countryJsonFileExt) else {
             #if DEBUG
             fatalError("Can't find the file")

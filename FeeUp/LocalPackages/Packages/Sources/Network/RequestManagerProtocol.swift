@@ -20,7 +20,7 @@ public final class RequestManager: RequestManagerProtocol {
     public let decoder: DataDecoderProtocol
     /// Initializes a new instance of the request manager with an optional custom API manager.
     /// - Parameter apiManager: The API manager to use. If not provided, a default API manager is used.
-    init(apiManager: APIManagerProtocol = APIManager(), decoder: DataDecoderProtocol = JsonDecoder()) {
+    public init(apiManager: APIManagerProtocol = APIManager(), decoder: DataDecoderProtocol = JsonDecoder()) {
         self.apiManager = apiManager
         self.decoder = decoder
     }
