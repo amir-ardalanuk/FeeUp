@@ -19,6 +19,8 @@ final class FeedListViewModel: ViewModel {
     // MARK: properties
     private let stateSubject: CurrentValueSubject<FeedList.State, Never>
     private let destinationSubject: PassthroughSubject<FeedList.Destination, Never>
+    private let feedUsecases: FeedUsecases
+    private var currentQuery: FeedQuery
 
     var state: FeedList.State { stateSubject.value }
 
@@ -31,10 +33,32 @@ final class FeedListViewModel: ViewModel {
     }
 
     // MARK: - init
-    init() {
-        self.stateSubject = .init(.init(newsList: [], isLoadingList: true))
+    init(feedUsecases: FeedUsecases) {
+        self.feedUsecases = feedUsecases
+        self.stateSubject = .init(.init(newsList: [], isLoadingList: true, search: nil))
         self.destinationSubject = .init()
+        self.currentQuery = .init()
     }
 
-    func handle(action: FeedList.Action) {}
+    func handle(action: FeedList.Action) {
+        switch action {
+        case let .search(text):
+            stateSubject.value.update { $0.search = text }
+        case .fetchLatestFeed:
+            fetchLatestFeed()
+        }
+    }
+
+    private func fetchLatestFeed() {
+        Task {
+            do {
+                let result = try await feedUsecases.fetchLatest(query: currentQuery)
+                stateSubject.value.update { $0.newsList = result }
+            } catch {
+                print(error)
+            }
+
+        }
+
+    }
 }

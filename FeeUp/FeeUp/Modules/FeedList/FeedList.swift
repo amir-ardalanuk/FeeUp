@@ -10,11 +10,15 @@ import Domain
 
 enum FeedList {
     struct State: StateProtocol {
-        let newsList: [News]
-        let isLoadingList: Bool
+        var newsList: [News]
+        var isLoadingList: Bool
+        var search: String?
     }
 
-    enum Action { }
+    enum Action {
+        case search(String)
+        case fetchLatestFeed
+    }
 
     enum Destination {}
 }

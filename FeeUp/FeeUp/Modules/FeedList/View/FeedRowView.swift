@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import Domain
 
 struct FeedRowView: View {
     enum Constants {
@@ -15,6 +15,8 @@ struct FeedRowView: View {
         static let innerSpacing = 8.0
         static let radius = 8.0
     }
+
+    let news: News
 
     var body: some View {
         HStack(spacing: Constants.spacing) {
@@ -29,15 +31,15 @@ struct FeedRowView: View {
 
             // News Details
             VStack(alignment: .leading, spacing: Constants.spacing) {
-                Text("title")
+                Text(news.title)
                     .font(.headline)
                 Spacer()
                 HStack {
-                    Text("date")
+                    Text(news.publishedAt.formatted(date: .abbreviated, time: .shortened))
                         .font(.subheadline)
                         .foregroundColor(.gray)
                     Spacer()
-                    Text("source")
+                    Text(news.source.name)
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }
@@ -50,7 +52,7 @@ struct FeedRowView: View {
 struct FeedRowView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            FeedRowView()
+            FeedRowView(news: .init(source: .init(id: "", name: ""), title: "", description: "", url: "", publishedAt: .now, content: ""))
         }.previewLayout(.fixed(width: 320, height: 100))
     }
 }

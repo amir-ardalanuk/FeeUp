@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct FeeUpApp: App {
+    let appDependencies: AppDependencies = AppDI.shared
+
     var body: some Scene {
+
         WindowGroup {
-            ContentView()
+            FeedListView(viewModel: FeedListViewModel(feedUsecases: appDependencies.dependencies.feedUsecases))
         }
     }
 }
