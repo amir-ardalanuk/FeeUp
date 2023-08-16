@@ -7,7 +7,7 @@ enum FeedRequest {
 
 extension FeedRequest: RequestProtocol {
     var host: String {
-        "https://newsapi.org"
+        "newsapi.org"
     }
 
     var path: String {
@@ -18,12 +18,12 @@ extension FeedRequest: RequestProtocol {
         .GET
     }
 
-    var params: [String: Any] {
-        var param = [String: Any]()
+    var urlParams: [String : String?] {
+        var param = [String: String?]()
         switch self {
         case let .topHeadlines(model):
-            param["pageSize"] = model.pageSize
-            param["page"] = model.page
+            param["pageSize"] = "\(model.pageSize)"
+            param["page"] = "\(model.pageSize)"
 
             if let q = model.query {
                 param["q"] = q
