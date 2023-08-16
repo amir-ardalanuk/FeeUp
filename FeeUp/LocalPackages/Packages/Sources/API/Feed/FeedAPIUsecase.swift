@@ -2,7 +2,13 @@ import Foundation
 import Network
 import Domain
 
-final class FeedAPIUsecases: FeedUsecases {
+//sourcery: AutoMockable
+public protocol FeedAPIProtocol {
+    func fetchLatest(query: Domain.FeedQuery) async throws -> [Domain.News]
+    func countries() async throws -> Domain.FeedCountries
+}
+
+final class FeedAPIUsecases: FeedAPIProtocol {
     enum Constant {
         static let countryJsonFileName = "countries"
         static let countryJsonFileExt = "json"
@@ -18,7 +24,6 @@ final class FeedAPIUsecases: FeedUsecases {
     func fetchLatest(query: Domain.FeedQuery) async throws -> [Domain.News] {
         let response: ServerResponse<[News]> = try await requestManager.perform(FeedRequest.topHeadlines(query))
         return response.articles
-
     }
 
     func countries() async throws -> Domain.FeedCountries {

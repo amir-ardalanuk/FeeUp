@@ -1,6 +1,6 @@
 import Foundation
 
-public struct FeedQuery {
+public struct FeedQuery: Equatable {
     public let query: String?
     public let category: FeedCategory?
     public let country: FeedCountry?

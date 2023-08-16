@@ -7,5 +7,6 @@ public protocol FeedUsecases {
 
 public protocol FeedBookmarkUsecases {
     func bookmark(news: News) async throws
-    func removeBookmark(newsId: String) async throws
+    func removeBookmark(news: News) async throws
+    func isBookmarked(news: News) throws -> Bool
 }

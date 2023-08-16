@@ -1,10 +1,12 @@
 import Foundation
 import Domain
 
+//sourcery: AutoMockable
 public protocol FeedPersistencing {
     func saveFeed(_ model: News) throws
     func removeFeed(withUrl url: String) throws
     func fetchAllFeed() throws -> [News]
+    func isBookmarked(newsURL: String) throws -> Bool
 }
 
 final class UserDefaultsFeedPersistence: FeedPersistencing {
@@ -40,11 +42,15 @@ final class UserDefaultsFeedPersistence: FeedPersistencing {
         try save(all: currentFeeds)
     }
 
-    public func fetchAllFeed() throws  -> [Domain.News] {
+    public func fetchAllFeed() throws -> [Domain.News] {
         guard let newsData = userDefault.data(forKey: Constant.newsKey) else {
              return []
         }
         return try decoder.decode([News].self, from: newsData)
     }
-}
 
+    public func isBookmarked(newsURL: String) throws -> Bool {
+        let feeds = try fetchAllFeed()
+        return feeds.contains(where: {$0.url == newsURL })
+    }
+}
