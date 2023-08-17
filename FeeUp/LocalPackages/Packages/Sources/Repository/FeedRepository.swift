@@ -31,5 +31,9 @@ final public class FeedRepository: FeedUsecases, FeedBookmarkUsecases {
     public func isBookmarked(news: News) throws -> Bool {
         try feedBookmarkPersistence.isBookmarked(newsURL: news.url)
     }
+
+    public func categories() async throws -> Domain.FeedCategories {
+        try await feedAPI.categories()
+    }
 }
 

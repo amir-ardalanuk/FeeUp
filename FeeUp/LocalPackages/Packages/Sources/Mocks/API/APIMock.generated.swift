@@ -90,10 +90,27 @@ open class FeedAPIProtocolMock: FeedAPIProtocol, Mock {
 		return __value
     }
 
+    open func categories() throws -> Domain.FeedCategories {
+        addInvocation(.m_categories)
+		let perform = methodPerformValue(.m_categories) as? () -> Void
+		perform?()
+		var __value: Domain.FeedCategories
+		do {
+		    __value = try methodReturnValue(.m_categories).casted()
+		} catch MockError.notStubed {
+			onFatalFailure("Stub return value not specified for categories(). Use given")
+			Failure("Stub return value not specified for categories(). Use given")
+		} catch {
+		    throw error
+		}
+		return __value
+    }
+
 
     fileprivate enum MethodType {
         case m_fetchLatest__query_query(Parameter<Domain.FeedQuery>)
         case m_countries
+        case m_categories
 
         static func compareParameters(lhs: MethodType, rhs: MethodType, matcher: Matcher) -> Matcher.ComparisonResult {
             switch (lhs, rhs) {
@@ -103,6 +120,8 @@ open class FeedAPIProtocolMock: FeedAPIProtocol, Mock {
 				return Matcher.ComparisonResult(results)
 
             case (.m_countries, .m_countries): return .match
+
+            case (.m_categories, .m_categories): return .match
             default: return .none
             }
         }
@@ -111,12 +130,14 @@ open class FeedAPIProtocolMock: FeedAPIProtocol, Mock {
             switch self {
             case let .m_fetchLatest__query_query(p0): return p0.intValue
             case .m_countries: return 0
+            case .m_categories: return 0
             }
         }
         func assertionName() -> String {
             switch self {
             case .m_fetchLatest__query_query: return ".fetchLatest(query:)"
             case .m_countries: return ".countries()"
+            case .m_categories: return ".categories()"
             }
         }
     }
@@ -135,6 +156,9 @@ open class FeedAPIProtocolMock: FeedAPIProtocol, Mock {
         }
         public static func countries(willReturn: Domain.FeedCountries...) -> MethodStub {
             return Given(method: .m_countries, products: willReturn.map({ StubProduct.return($0 as Any) }))
+        }
+        public static func categories(willReturn: Domain.FeedCategories...) -> MethodStub {
+            return Given(method: .m_categories, products: willReturn.map({ StubProduct.return($0 as Any) }))
         }
         public static func fetchLatest(query: Parameter<Domain.FeedQuery>, willThrow: Error...) -> MethodStub {
             return Given(method: .m_fetchLatest__query_query(`query`), products: willThrow.map({ StubProduct.throw($0) }))
@@ -156,6 +180,16 @@ open class FeedAPIProtocolMock: FeedAPIProtocol, Mock {
 			willProduce(stubber)
 			return given
         }
+        public static func categories(willThrow: Error...) -> MethodStub {
+            return Given(method: .m_categories, products: willThrow.map({ StubProduct.throw($0) }))
+        }
+        public static func categories(willProduce: (StubberThrows<Domain.FeedCategories>) -> Void) -> MethodStub {
+            let willThrow: [Error] = []
+			let given: Given = { return Given(method: .m_categories, products: willThrow.map({ StubProduct.throw($0) })) }()
+			let stubber = given.stubThrows(for: (Domain.FeedCategories).self)
+			willProduce(stubber)
+			return given
+        }
     }
 
     public struct Verify {
@@ -163,6 +197,7 @@ open class FeedAPIProtocolMock: FeedAPIProtocol, Mock {
 
         public static func fetchLatest(query: Parameter<Domain.FeedQuery>) -> Verify { return Verify(method: .m_fetchLatest__query_query(`query`))}
         public static func countries() -> Verify { return Verify(method: .m_countries)}
+        public static func categories() -> Verify { return Verify(method: .m_categories)}
     }
 
     public struct Perform {
@@ -174,6 +209,9 @@ open class FeedAPIProtocolMock: FeedAPIProtocol, Mock {
         }
         public static func countries(perform: @escaping () -> Void) -> Perform {
             return Perform(method: .m_countries, performs: perform)
+        }
+        public static func categories(perform: @escaping () -> Void) -> Perform {
+            return Perform(method: .m_categories, performs: perform)
         }
     }
 

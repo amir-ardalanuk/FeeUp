@@ -107,6 +107,10 @@ struct FeedListView_Previews: PreviewProvider {
         func countries() async throws -> Domain.FeedCountries {
             []
         }
+
+        func categories() async throws -> FeedCategories {
+            []
+        }
     }
 
     static var previews: some View {

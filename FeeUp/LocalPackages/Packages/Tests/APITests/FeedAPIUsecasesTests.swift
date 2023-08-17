@@ -93,3 +93,37 @@ extension FeedAPIUsecasesTests {
         }
     }
 }
+
+// MARK: - Test categories method
+
+extension FeedAPIUsecasesTests {
+    private func provideCategoryData() -> Data {
+        let countryData = """
+        [
+          { "key": "business", "name": "Business", "emoji": "💼" }
+        ]
+        """
+        return countryData.data(using: .utf8)!
+    }
+
+    func test_categories_whenDataLoadSuccessfully() async throws {
+        let stubData = provideCategoryData()
+        resourceLoadingMock.given(.data(forResource: .value(FeedAPIUsecases.Constant.categoryJsonFileName), withExtension: .value(FeedAPIUsecases.Constant.categoryJsonFileExt), willReturn: stubData))
+        requestManagerMock.given(.decoder(getter: JsonDecoder()))
+        let result = try await sut.categories()
+        XCTAssertEqual(result.first?.key, "business")
+        XCTAssertEqual(result.first?.name, "Business")
+        XCTAssertEqual(result.first?.emoji, "💼")
+    }
+
+    func test_categories_whenLoaderCantFindAFile() async throws {
+        let localError = NSError(domain: "can't find a file", code: 404)
+        resourceLoadingMock.given(.data(forResource: .value(FeedAPIUsecases.Constant.countryJsonFileName), withExtension: .value(FeedAPIUsecases.Constant.countryJsonFileExt), willThrow: localError))
+        do {
+            _ = try await sut.categories()
+            XCTFail("should not pass if network throw an error")
+        } catch {
+            XCTAssertEqual(error.localizedDescription, localError.localizedDescription)
+        }
+    }
+}

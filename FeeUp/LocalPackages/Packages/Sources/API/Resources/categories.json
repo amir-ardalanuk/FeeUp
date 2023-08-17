@@ -1,0 +1,9 @@
+[
+  { "key": "business", "name": "Business", "emoji": "💼" },
+  { "key": "entertainment", "name": "Entertainment", "emoji": "🎉" },
+  { "key": "general", "name": "General", "emoji": "🌍" },
+  { "key": "health", "name": "Health", "emoji": "🏥" },
+  { "key": "science", "name": "Science", "emoji": "🔬" },
+  { "key": "sports", "name": "Sports", "emoji": "⚽️" },
+  { "key": "technology", "name": "Technology", "emoji": "📱" }
+]

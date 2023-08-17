@@ -31,7 +31,7 @@ extension FeedRequest: RequestProtocol {
             }
 
             if let category = model.category {
-                param["category"] = category.rawValue
+                param["category"] = category.key
             }
         }
         return param

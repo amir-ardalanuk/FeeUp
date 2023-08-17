@@ -56,6 +56,10 @@ struct CountryListView: View {
 
 struct CountryListView_Previews: PreviewProvider {
     struct FeedUsecasesMock: FeedUsecases {
+        func categories() async throws -> Domain.FeedCategories {
+            return []
+        }
+
         func fetchLatest(query: Domain.FeedQuery) async throws -> [Domain.News] {
             []
         }

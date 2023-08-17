@@ -24,13 +24,14 @@ class FeedRequestTests: XCTestCase {
     }
 
     func test_topHeadlines_withCategoryQuery() throws {
-        let query: FeedQuery = .init(country: Constant.country, category: FeedCategory.business)
+        let category = FeedCategory(key: "test", name: "test", emoji: "test")
+        let query: FeedQuery = .init(country: Constant.country, category: category)
         sut = .topHeadlines(query)
         let request = try sut.createURLRequest()
         let queryParam = request.url?.queryParameters!
         XCTAssertEqual(queryParam?["page"], "1")
         XCTAssertEqual(queryParam?["pageSize"], "30")
-        XCTAssertEqual(queryParam?["category"], query.category!.rawValue)
+        XCTAssertEqual(queryParam?["category"], category.key)
         XCTAssertEqual(query.country.key, queryParam?["country"])
         XCTAssertNil(queryParam?["q"])
     }

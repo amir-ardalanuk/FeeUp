@@ -6,12 +6,16 @@ import Domain
 public protocol FeedAPIProtocol {
     func fetchLatest(query: Domain.FeedQuery) async throws -> [Domain.News]
     func countries() async throws -> Domain.FeedCountries
+    func categories() async throws -> Domain.FeedCategories
 }
 
 public final class FeedAPIUsecases: FeedAPIProtocol {
     enum Constant {
         static let countryJsonFileName = "countries"
         static let countryJsonFileExt = "json"
+
+        static let categoryJsonFileName = "categories"
+        static let categoryJsonFileExt = "json"
     }
     private let requestManager: RequestManagerProtocol
     private let resourceLoader: ResourceLoading
@@ -40,6 +44,17 @@ public final class FeedAPIUsecases: FeedAPIProtocol {
             #endif
         }
         return try requestManager.decoder.decode(jsonData, type: FeedCountries.self)
+    }
+
+    public func categories() async throws -> Domain.FeedCategories {
+        guard let jsonData = try resourceLoader.data(forResource: Constant.categoryJsonFileName, withExtension: Constant.categoryJsonFileExt) else {
+            #if DEBUG
+            fatalError("Can't find the file")
+            #else
+            return []
+            #endif
+        }
+        return try requestManager.decoder.decode(jsonData, type: FeedCategories.self)
     }
 
 }

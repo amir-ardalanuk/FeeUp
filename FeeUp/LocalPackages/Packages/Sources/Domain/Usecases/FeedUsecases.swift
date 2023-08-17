@@ -4,6 +4,7 @@ import Foundation
 public protocol FeedUsecases {
     func fetchLatest(query: FeedQuery) async throws -> [News]
     func countries() async throws -> FeedCountries
+    func categories() async throws -> FeedCategories
 }
 
 //sourcery: AutoMockable

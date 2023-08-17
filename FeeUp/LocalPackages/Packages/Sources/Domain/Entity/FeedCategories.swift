@@ -1,11 +1,16 @@
 import Foundation
 
-public enum FeedCategory: String, CaseIterable, Equatable {
-    case business
-    case entertainment
-    case general
-    case health
-    case science
-    case sports
-    case technology
+public struct FeedCategory: Codable, Equatable, Identifiable {
+    public init(key: String, name: String, emoji: String) {
+        self.key = key
+        self.name = name
+        self.emoji = emoji
+    }
+
+    public var id: String { key }
+    public let key: String
+    public let name: String
+    public let emoji: String
 }
+
+public typealias FeedCategories = [FeedCategory]
