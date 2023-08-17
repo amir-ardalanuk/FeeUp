@@ -19,7 +19,6 @@ struct FeedDetailView: View {
 
     var body: some View {
         NavigationView {
-            VStack {
                 ScrollView {
                     remoteView()
                     VStack(alignment: .leading, spacing: 12.0) {
@@ -30,7 +29,6 @@ struct FeedDetailView: View {
                     }.padding()
 
                 }
-            }
         }.toolbar {
             Button(action: {
                 viewModel.handle(action: .toggleBookmarked)
