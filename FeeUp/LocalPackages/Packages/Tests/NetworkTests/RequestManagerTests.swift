@@ -1,6 +1,7 @@
 import XCTest
 import SwiftyMocky
 import Foundation
+import Mocks
 @testable import Network
 
 class RequestManagerTests: XCTestCase {
@@ -62,7 +63,7 @@ class RequestManagerTests: XCTestCase {
     }
 
     func test_perform_withFailedSeverResponse() async throws {
-        let serverError = ServerError(success: false, message: "Can't find your request")
+        let serverError = ServerError(status: "error", message: "Can't find your request")
         let responseData = try JSONEncoder().encode(serverError)
         let request = URLRequest(url: .init(string: "https://example.com")!)
         let mockRequest = RequestProtocolMock()
@@ -75,7 +76,7 @@ class RequestManagerTests: XCTestCase {
             XCTFail("Expected an error, but request succeeded")
         } catch {
             let networkError = error as! NetworkError
-            XCTAssertEqual(networkError, .ServerError(serverError))
+            XCTAssertEqual(networkError, .serverError(serverError))
         }
     }
 }

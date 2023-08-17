@@ -53,7 +53,7 @@ let package = Package(
             dependencies: ["API", "Mocks", "SwiftyMocky"]),
         .target(
             name: "Mocks",
-            dependencies: ["Network", "Domain", "API", "SwiftyMocky"]
+            dependencies: ["Network", "Domain", "API", "Persistence", "SwiftyMocky"]
         ),
         .target(
             name: "Persistence",

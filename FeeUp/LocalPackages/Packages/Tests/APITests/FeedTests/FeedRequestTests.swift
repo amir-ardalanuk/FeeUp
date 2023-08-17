@@ -7,52 +7,55 @@ import Network
 class FeedRequestTests: XCTestCase {
     var sut: FeedRequest!
 
-    func test_topHeadlines_withEmptyQuery() throws {
-        let query: FeedQuery = .init()
-        sut = .topHeadlines(query)
-        let request = try sut.createURLRequest()
-        let json = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
-        XCTAssertEqual(json["page"] as! Int, 1)
-        XCTAssertEqual(json["pageSize"] as! Int, 100)
-        XCTAssertNil(json["q"])
-        XCTAssertNil(json["category"])
-        XCTAssertNil(json["country"])
+    enum Constant {
+        static let country: FeedCountry = .init(key: "us", name: "USA", flag: "")
     }
 
-    func test_topHeadlines_withCountryQuery() throws {
-        let query: FeedQuery = .init(country: FeedCountry(key: "en", name: "English", flag: "none"))
+    func test_topHeadlines_withEmptyQuery() throws {
+        let query: FeedQuery = .init(country: Constant.country)
         sut = .topHeadlines(query)
         let request = try sut.createURLRequest()
-        let json = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
-        XCTAssertEqual(json["page"] as! Int, 1)
-        XCTAssertEqual(json["pageSize"] as! Int, 100)
-        XCTAssertEqual(query.country?.key, (json["country"] as! String))
-        XCTAssertNil(json["q"])
-        XCTAssertNil(json["category"])
+        let queryParam = request.url?.queryParameters!
+        XCTAssertEqual(queryParam?["page"], "1")
+        XCTAssertEqual(queryParam?["pageSize"], "30")
+        XCTAssertEqual(query.country.key, queryParam?["country"])
+        XCTAssertNil(queryParam?["category"])
+        XCTAssertNil(queryParam?["q"])
     }
 
     func test_topHeadlines_withCategoryQuery() throws {
-        let query: FeedQuery = .init(category: FeedCategory.business)
+        let query: FeedQuery = .init(country: Constant.country, category: FeedCategory.business)
         sut = .topHeadlines(query)
         let request = try sut.createURLRequest()
-        let json = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
-        XCTAssertEqual(json["page"] as! Int, 1)
-        XCTAssertEqual(json["pageSize"] as! Int, 100)
-        XCTAssertEqual(json["category"] as! String, query.category!.rawValue)
-        XCTAssertNil(json["country"])
-        XCTAssertNil(json["q"])
+        let queryParam = request.url?.queryParameters!
+        XCTAssertEqual(queryParam?["page"], "1")
+        XCTAssertEqual(queryParam?["pageSize"], "30")
+        XCTAssertEqual(queryParam?["category"], query.category!.rawValue)
+        XCTAssertEqual(query.country.key, queryParam?["country"])
+        XCTAssertNil(queryParam?["q"])
     }
 
 
     func test_topHeadlines_withSearchQuery() throws {
-        let query: FeedQuery = .init(query: "home")
+        let query: FeedQuery = .init(country: Constant.country, query: "home")
         sut = .topHeadlines(query)
         let request = try sut.createURLRequest()
-        let json = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
-        XCTAssertEqual(json["page"] as! Int, 1)
-        XCTAssertEqual(json["pageSize"] as! Int, 100)
-        XCTAssertNil(json["category"])
-        XCTAssertNil(json["country"])
-        XCTAssertEqual(json["q"] as! String, query.query!)
+        let queryParam = request.url?.queryParameters!
+        XCTAssertEqual(queryParam?["page"], "1")
+        XCTAssertEqual(queryParam?["pageSize"], "30")
+        XCTAssertNil(queryParam?["category"])
+        XCTAssertEqual(query.country.key, queryParam?["country"])
+        XCTAssertEqual(queryParam?["q"], query.query!)
+    }
+}
+
+fileprivate extension URL {
+    var queryParameters: [String: String]? {
+        guard
+            let components = URLComponents(url: self, resolvingAgainstBaseURL: true),
+            let queryItems = components.queryItems else { return nil }
+        return queryItems.reduce(into: [String: String]()) { (result, item) in
+            result[item.name] = item.value
+        }
     }
 }

@@ -1,29 +1,26 @@
-import XCTest
-import Foundation
-import Domain
-import Network
-import Mocks
-import SwiftyMocky
 @testable import API
+import Domain
+import Foundation
+import Mocks
+import Network
+import SwiftyMocky
+import XCTest
 
 class FeedAPIUsecasesTests: XCTestCase {
     var sut: FeedAPIUsecases!
     var resourceLoadingMock: ResourceLoadingMock!
     var requestManagerMock: RequestManagerProtocolMock!
 
+    enum Constant {
+        static let country: FeedCountry = .init(key: "us", name: "USA", flag: "")
+    }
+
     override func setUp() {
         super.setUp()
         resourceLoadingMock = ResourceLoadingMock()
         requestManagerMock = RequestManagerProtocolMock()
         sut = .init(requestManager: requestManagerMock, resourceLoader: resourceLoadingMock)
-        Matcher.default.register(RequestProtocol.self) { lhs, rhs in
-            do {
-                return try (lhs.createURLRequest() == rhs.createURLRequest())
-            } catch {
-                return false
-            }
-        }
-
+        Matcher.default.registerRequestProtocol()
     }
 
     override func tearDown() {
@@ -35,9 +32,10 @@ class FeedAPIUsecasesTests: XCTestCase {
 }
 
 // MARK: - Test fetchLatest method
+
 extension FeedAPIUsecasesTests {
     func test_fetchLatest_whenNetworkRetriveDataSuccessfuly() async throws {
-        let query: FeedQuery = .init()
+        let query: FeedQuery = .init(country: Constant.country)
         let request = FeedRequest.topHeadlines(query)
         let news = News.stub()
         let serverResponse = ServerResponse(status: "success", totalResults: 1, message: nil, articles: [news])
@@ -47,7 +45,7 @@ extension FeedAPIUsecasesTests {
     }
 
     func test_fetchLatest_whenNetworkThrowAnError() async throws {
-        let query: FeedQuery = .init()
+        let query: FeedQuery = .init(country: Constant.country)
         let request = FeedRequest.topHeadlines(query)
         let serverError = ServerError(status: "error", message: "try again later")
         let networkError = NetworkError.serverError(serverError)
@@ -62,6 +60,7 @@ extension FeedAPIUsecasesTests {
 }
 
 // MARK: - Test countries method
+
 extension FeedAPIUsecasesTests {
     private func provideCountryData() -> Data {
         let countryData = """

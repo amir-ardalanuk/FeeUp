@@ -12,6 +12,10 @@ class FeedRepositoryTests: XCTestCase {
     var feedBookmarkPersistence: FeedPersistencingMock!
     var feedAPIMock: FeedAPIProtocolMock!
 
+    enum Constant {
+        static let country: FeedCountry = .init(key: "us", name: "USA", flag: "")
+    }
+
     override func setUp() {
         super.setUp()
         feedBookmarkPersistence = FeedPersistencingMock()
@@ -30,7 +34,7 @@ class FeedRepositoryTests: XCTestCase {
 // MARK: - FeedUsecases method tests
 extension FeedRepositoryTests {
     func test_fetchLatest_whenFeedAPIReturnDataSuccessfully() async throws {
-        let query = FeedQuery()
+        let query = FeedQuery(country: Constant.country)
         let news = News.stub()
         feedAPIMock.given(.fetchLatest(query: .value(query), willReturn: [news]))
         let result = try await sut.fetchLatest(query: query)
@@ -38,7 +42,7 @@ extension FeedRepositoryTests {
     }
 
     func test_fetchLatest_whenFeedAPIThrowAnError() async throws {
-        let query = FeedQuery()
+        let query = FeedQuery(country: Constant.country)
         let localError = NSError(domain: "Server error", code: 500)
         feedAPIMock.given(.fetchLatest(query: .value(query), willThrow: localError))
         do {
@@ -139,7 +143,7 @@ extension FeedRepositoryTests {
         let localError = NSError(domain: "Server error", code: 500)
         feedBookmarkPersistence.given(.isBookmarked(newsURL: .value(news.url), willThrow: localError))
         do {
-            let result = try sut.isBookmarked(news: news)
+            let _ = try sut.isBookmarked(news: news)
             XCTFail("Should not be here")
         } catch {
             XCTAssertEqual(error.localizedDescription, localError.localizedDescription)
