@@ -15,6 +15,7 @@ enum FeedList {
         var hasLoadMore: Bool
         var isLoadingMore: Bool
         var search: String?
+        var errorMessage: String?
     }
 
     enum Action {

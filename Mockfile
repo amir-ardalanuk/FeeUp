@@ -33,3 +33,13 @@ PersistenceTests:
   import:
     - Foundation
     - Domain
+
+DomainTests:
+  sources:
+    include:
+      - ./FeeUp/LocalPackages/Packages/Sources/Domain
+  output: ./FeeUp/LocalPackages/Packages/Sources/Mocks/Domain/DomainMock.generated.swift
+  testable:
+    - Domain
+  import:
+    - Foundation

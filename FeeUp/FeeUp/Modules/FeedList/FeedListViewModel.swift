@@ -61,6 +61,7 @@ final class FeedListViewModel: ViewModel {
             $0.search = text
             $0.newsList = []
             $0.isLoadingList = true
+            $0.errorMessage = nil
         }
         searchTask = Task {
             try await Task.sleep(nanoseconds: 1_000_000_000)
@@ -79,7 +80,10 @@ final class FeedListViewModel: ViewModel {
                     }
                 }
             } catch {
-                print(error)
+                stateSubject.value.update {
+                    $0.errorMessage = error.localizedDescription
+                    $0.isLoadingList = false
+                }
             }
         }
     }
