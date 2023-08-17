@@ -53,6 +53,8 @@ final class FeedListViewModel: ViewModel {
             changeCountry(country)
         case .fetchCountries:
             fetchCountries()
+        case let .changeCategory(cateogory):
+            changeCategory(cateogory)
         }
     }
 
@@ -63,8 +65,16 @@ final class FeedListViewModel: ViewModel {
             }
             currentQuery = .init(country: first)
             stateSubject.value.update { $0.selectedCountry = first }
+            await fetchLatestFeed()
         }
 
+    }
+
+    @MainActor
+    private func changeCategory(_ category: FeedCategory?) {
+        currentQuery?.update { $0.category = category }
+        stateSubject.value.update { $0.selectedCategory = category }
+        fetchLatestFeed()
     }
 
     @MainActor

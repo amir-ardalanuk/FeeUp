@@ -12,6 +12,7 @@ import Combine
 struct FeedListView: View {
     @Environment(\.appDependencyValue) var appDependencies: AppDependencies
     @State private var showingCountrySheet = false
+    @State private var showingCategorySheet = false
     @State private var state: FeedList.State
     let viewModel: any FeedListViewModelProtocol
 
@@ -68,6 +69,12 @@ struct FeedListView: View {
                     }, label: {
                         Text("\(state.selectedCountry?.flag ?? "Loading")")
                     })
+
+                    Button(action: {
+                        showingCategorySheet = true
+                    }, label: {
+                        Text("\(state.selectedCategory?.emoji ?? "📦")")
+                    })
                 }
         }.onAppear {
             viewModel.handle(action: .fetchCountries)
@@ -75,6 +82,11 @@ struct FeedListView: View {
             CountryListView(viewModel: CountryListViewModel(defaultSelected: state.selectedCountry, feedUsecases: appDependencies.dependencies.feedUsecases)) { new in
                 showingCountrySheet = false
                 viewModel.handle(action: .changeCountry(new))
+            }
+        }.sheet(isPresented: $showingCategorySheet) {
+            CategoryListView(viewModel: CategoryListViewModel(defaultSelected: state.selectedCategory, feedUsecases: appDependencies.dependencies.feedUsecases)) { new in
+                showingCategorySheet = false
+                viewModel.handle(action: .changeCategory(new))
             }
         }
     }

@@ -26,6 +26,7 @@ enum FeedList {
         case loadNextPage
         case changeCountry(FeedCountry)
         case fetchCountries
+        case changeCategory(FeedCategory?)
     }
 
     enum Destination {}

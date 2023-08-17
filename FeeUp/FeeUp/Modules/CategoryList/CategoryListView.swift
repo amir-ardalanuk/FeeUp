@@ -13,8 +13,8 @@ import SwiftUI
 struct CategoryListView: View {
     @State private var state: CategoryList.State
     let viewModel: any CategoryListViewModelProtocol
-    var action: (FeedCategory) -> Void
-    init(viewModel: any CategoryListViewModelProtocol, action: @escaping (FeedCategory) -> Void) {
+    var action: (FeedCategory?) -> Void
+    init(viewModel: any CategoryListViewModelProtocol, action: @escaping (FeedCategory?) -> Void) {
         self.action = action
         self.viewModel = viewModel
         self._state = .init(initialValue: viewModel.state)
@@ -24,21 +24,16 @@ struct CategoryListView: View {
         NavigationStack {
             ScrollView {
                 LazyVStack {
+                    Button(action: {
+                        action(nil)
+                    }, label: {
+                        rowView(title: "None.", isSelected: state.currentSelected?.key == nil, emoji: "📦")
+                    })
                     ForEach(state.categoryList, id: \.key) { category in
                         Button(action: {
                             action(category)
                         }, label: {
-                            HStack {
-                                if category.key == state.currentSelected?.key {
-                                    Image(systemName: "checkmark.seal.fill").foregroundColor(.green)
-                                } else {
-                                    Image(systemName: "checkmark.seal").hidden()
-                                }
-                                Text("\(category.emoji)")
-                                Text("\(category.name)")
-                                Spacer()
-                                Text("\(category.key)").foregroundColor(.gray)
-                            }.foregroundColor(.black).padding()
+                            rowView(title: category.name, isSelected: category.key == state.currentSelected?.key, emoji: category.emoji)
                         })
                     }
                 }
@@ -51,6 +46,20 @@ struct CategoryListView: View {
                     viewModel.handle(action: .fetchCategories)
                 }
         }
+    }
+
+    @ViewBuilder
+    func rowView(title: String, isSelected: Bool, emoji: String) -> some View {
+        HStack {
+            if isSelected {
+                Image(systemName: "checkmark.seal.fill").foregroundColor(.green)
+            } else {
+                Image(systemName: "checkmark.seal").hidden()
+            }
+            Text(emoji)
+            Text(title)
+            Spacer()
+        }.foregroundColor(.black).padding()
     }
 }
 
