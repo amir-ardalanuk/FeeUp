@@ -10,6 +10,8 @@ import Domain
 import Combine
 
 struct FeedListView: View {
+    @Environment(\.appDependencyValue) var appDependencies: AppDependencies
+    
     @State private var state: FeedList.State
     let viewModel: any FeedListViewModelProtocol
 
@@ -19,7 +21,7 @@ struct FeedListView: View {
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 ScrollView {
                     LazyVStack {
@@ -34,7 +36,9 @@ struct FeedListView: View {
                             Text("Can't Find any news ...")
                         }
                         ForEach(state.newsList, id: \.self) { value in
-                            FeedRowView(news: value).frame(height: 100)
+                            NavigationLink(value: value) {
+                                FeedRowView(news: value).frame(height: 100)
+                            }
                         }
                         if state.hasLoadMore {
                             Text("Loading More ...").onAppear {
@@ -54,6 +58,10 @@ struct FeedListView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .onReceive(viewModel.statePublisher.receive(on: DispatchQueue.main)) { state in
                     self.state = state
+                }
+                .navigationDestination(for: News.self) { news in
+                    @Environment(\.appDependencyValue) var appDependencies: AppDependencies
+                    FeedDetailView(viewModel: FeedDetailViewModel(news: news, feedBookmarkUsecases: appDependencies.dependencies.feedBookmarkUsecases))
                 }
         }.onAppear {
             viewModel.handle(action: .fetchLatestFeed)
