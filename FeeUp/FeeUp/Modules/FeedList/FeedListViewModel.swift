@@ -21,7 +21,7 @@ final class FeedListViewModel: ViewModel {
     private let destinationSubject: PassthroughSubject<FeedList.Destination, Never>
     private let feedUsecases: FeedUsecases
     private var currentQuery: FeedQuery
-
+    private var searchTask: Task<Void, Error>?
     var state: FeedList.State { stateSubject.value }
 
     var destinationPublisher: AnyPublisher<FeedList.Destination, Never> {
@@ -44,11 +44,43 @@ final class FeedListViewModel: ViewModel {
     func handle(action: FeedList.Action) {
         switch action {
         case let .search(text):
-            stateSubject.value.update { $0.search = text }
+            search(text: text)
         case .fetchLatestFeed:
             fetchLatestFeed()
         case .loadNextPage:
             fetchNextPage()
+        }
+    }
+
+    @MainActor
+    private func search(text: String) {
+        guard !text.isEmpty else {
+            return fetchLatestFeed()
+        }
+        stateSubject.value.update {
+            $0.search = text
+            $0.newsList = []
+            $0.isLoadingList = true
+        }
+        searchTask = Task {
+            try await Task.sleep(nanoseconds: 1_000_000_000)
+            guard !Task.isCancelled else { return }
+            currentQuery.update {
+                $0.page = 1
+                $0.query = text
+            }
+            do {
+                let result = try await feedUsecases.fetchLatest(query: currentQuery)
+                await MainActor.run {
+                    stateSubject.value.update {
+                        $0.newsList = result
+                        $0.hasLoadMore = result.count == currentQuery.pageSize
+                        $0.isLoadingList = false
+                    }
+                }
+            } catch {
+                print(error)
+            }
         }
     }
 
@@ -77,7 +109,10 @@ final class FeedListViewModel: ViewModel {
         stateSubject.value.update { $0.isLoadingList = true }
         Task {
             do {
-                currentQuery.update { $0.page = 1 }
+                currentQuery.update {
+                    $0.page = 1
+                    $0.query = nil
+                }
                 let result = try await feedUsecases.fetchLatest(query: currentQuery)
                 await MainActor.run {
                     stateSubject.value.update {

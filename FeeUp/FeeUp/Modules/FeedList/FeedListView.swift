@@ -23,6 +23,13 @@ struct FeedListView: View {
             VStack {
                 ScrollView {
                     LazyVStack {
+                        if state.isLoadingList {
+                            Text("Fetching latest News ...")
+                        }
+
+                        if !state.isLoadingList, state.newsList.isEmpty {
+                            Text("Can't Find any news ...")
+                        }
                         ForEach(state.newsList, id: \.self) { value in
                             FeedRowView(news: value).frame(height: 100)
                         }
