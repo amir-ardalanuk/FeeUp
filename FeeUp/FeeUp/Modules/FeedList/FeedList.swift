@@ -17,6 +17,7 @@ enum FeedList {
         var search: String?
         var errorMessage: String?
         var selectedCountry: FeedCountry?
+        var selectedCategory: FeedCategory?
     }
 
     enum Action {
