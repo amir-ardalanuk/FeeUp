@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		291A024B2A8EB72B008685FB /* CategoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291A024A2A8EB72B008685FB /* CategoryList.swift */; };
 		291A024D2A8EB858008685FB /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291A024C2A8EB858008685FB /* CategoryViewModel.swift */; };
+		291A024F2A8EBBD6008685FB /* CategoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291A024E2A8EBBD6008685FB /* CategoryListView.swift */; };
 		292603D72A8E5799007B5C0C /* FeedDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B7F44D2A8E4F360098445D /* FeedDetailView.swift */; };
 		292E71E22A88DC6100E82933 /* FeeUpApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292E71E12A88DC6100E82933 /* FeeUpApp.swift */; };
 		292E71E62A88DC6200E82933 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 292E71E52A88DC6200E82933 /* Assets.xcassets */; };
@@ -60,6 +61,7 @@
 /* Begin PBXFileReference section */
 		291A024A2A8EB72B008685FB /* CategoryList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryList.swift; sourceTree = "<group>"; };
 		291A024C2A8EB858008685FB /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
+		291A024E2A8EBBD6008685FB /* CategoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListView.swift; sourceTree = "<group>"; };
 		292E71DE2A88DC6100E82933 /* FeeUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FeeUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		292E71E12A88DC6100E82933 /* FeeUpApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeeUpApp.swift; sourceTree = "<group>"; };
 		292E71E52A88DC6200E82933 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 			children = (
 				291A024A2A8EB72B008685FB /* CategoryList.swift */,
 				291A024C2A8EB858008685FB /* CategoryViewModel.swift */,
+				291A024E2A8EBBD6008685FB /* CategoryListView.swift */,
 			);
 			path = CategoryList;
 			sourceTree = "<group>";
@@ -455,6 +458,7 @@
 				292E71E22A88DC6100E82933 /* FeeUpApp.swift in Sources */,
 				29C229162A8D069F00D85333 /* FeedListView.swift in Sources */,
 				29C229292A8D115B00D85333 /* AppDependencies.swift in Sources */,
+				291A024F2A8EBBD6008685FB /* CategoryListView.swift in Sources */,
 				292E72122A88DED100E82933 /* FeedRowView.swift in Sources */,
 				29C2292B2A8D125F00D85333 /* DependencyManager.swift in Sources */,
 				29B7F4442A8E488A0098445D /* FeedDetail.swift in Sources */,
