@@ -30,7 +30,8 @@ struct FeedRowView: View {
             VStack(alignment: .leading, spacing: Constants.spacing) {
                 Text(news.title ?? "-")
                     .font(.headline)
-                Spacer()
+                    .minimumScaleFactor(0.8)
+                    .multilineTextAlignment(.leading)
                 HStack {
                     Text(news.publishedAt.formatted(date: .abbreviated, time: .shortened))
                         .font(.subheadline)

@@ -21,7 +21,7 @@ final class FeedDetailViewModel: ViewModel {
     private let stateSubject: CurrentValueSubject<FeedDetail.State, Never>
     private let destinationSubject: PassthroughSubject<FeedDetail.Destination, Never>
     private let feedUsecases: FeedBookmarkUsecases
-
+    private let news: News
     var state: FeedDetail.State { stateSubject.value }
 
     var destinationPublisher: AnyPublisher<FeedDetail.Destination, Never> {
@@ -34,6 +34,7 @@ final class FeedDetailViewModel: ViewModel {
 
     // MARK: - init
     init(news: News, feedBookmarkUsecases: FeedBookmarkUsecases) {
+        self.news = news
         self.feedUsecases = feedBookmarkUsecases
         let isBookmarked = (try? feedBookmarkUsecases.isBookmarked(news: news)) ?? false
         self.stateSubject = .init(.init(news: news, isBookmarked: isBookmarked))
@@ -41,6 +42,23 @@ final class FeedDetailViewModel: ViewModel {
     }
 
     func handle(action: FeedDetail.Action) {
+        switch action {
+        case .toggleBookmarked:
+            toggleBookmark()
+        }
+    }
+
+    private func toggleBookmark() {
+        Task {
+            let isBookmarked = try feedUsecases.isBookmarked(news: news)
+            if isBookmarked {
+                try await feedUsecases.removeBookmark(news: news)
+                stateSubject.value.update { $0.isBookmarked = false }
+            } else {
+                try await feedUsecases.bookmark(news: news)
+                stateSubject.value.update { $0.isBookmarked = true }
+            }
+        }
 
     }
 }

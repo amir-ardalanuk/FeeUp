@@ -15,5 +15,6 @@ struct RemoteImage: View {
         KFImage(url)
             .setProcessor(DownsamplingImageProcessor(size: CGSize(width: 500, height: 500)))
             .fade(duration: 0.3)
+            .resizable()
     }
 }

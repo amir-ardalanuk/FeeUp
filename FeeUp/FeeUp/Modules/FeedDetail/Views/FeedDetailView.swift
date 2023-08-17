@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Domain
 
 struct FeedDetailView: View {
     @State private var state: FeedDetail.State
@@ -13,18 +14,29 @@ struct FeedDetailView: View {
 
     init(viewModel: any FeedDetailViewModelProtocol) {
         self.viewModel = viewModel
-        self.state = viewModel.state
+        self._state = .init(initialValue: viewModel.state) 
     }
 
     var body: some View {
         NavigationView {
             VStack {
                 ScrollView {
-                    Color.white
-                        .overlay(remoteView())
-                        .aspectRatio(contentMode: .fit)
+                    remoteView()
+                    VStack(alignment: .leading, spacing: 12.0) {
+                        Text(state.news.title ?? "-").font(.title)
+                        Text("Author: \(state.news.author ?? "-")").font(.caption2)
+                        Text("Published at: \(state.news.publishedAt.formatted())").font(.caption2)
+                        Text(state.news.content ?? "-").font(.caption)
+                    }.padding()
+
                 }
             }
+        }.toolbar {
+            Button(action: {
+                viewModel.handle(action: .toggleBookmarked)
+            }, label: {
+                Image(systemName: state.isBookmarked ? "heart.fill" : "heart")
+            }).foregroundColor(.red)
         }.navigationTitle(state.news.title ?? "Detail")
             .navigationBarTitleDisplayMode(.inline)
             .onReceive(viewModel.statePublisher.receive(on: DispatchQueue.main)) { state in
@@ -41,25 +53,25 @@ struct FeedDetailView: View {
         }
     }
 }
-//
-//struct FeedDetailView_Previews: PreviewProvider {
-//    struct FeedBookmarkUsecasesMock: FeedBookmarkUsecases {
-//
-//        func bookmark(news: Domain.News) async throws {
-//        }
-//
-//        func removeBookmark(news: Domain.News) async throws {
-//
-//        }
-//
-//        func isBookmarked(news: Domain.News) throws -> Bool {
-//            return true
-//        }
-//
-//    }
-//
-//    static var previews: some View {
-//        let news: News = .init(source: .init(id: "", name: "name"), title: "title", description: "dsc", url: "url", publishedAt: .now, content: "content")
-//        return FeedDetailView(state: .init(news: news, isBookmarked: false), viewModel: FeedDetailViewModel(news: news, feedBookmarkUsecases: FeedBookmarkUsecasesMock()))
-//    }
-//}
+
+struct FeedDetailView_Previews: PreviewProvider {
+    struct FeedBookmarkUsecasesMock: FeedBookmarkUsecases {
+
+        func bookmark(news: Domain.News) async throws {
+        }
+
+        func removeBookmark(news: Domain.News) async throws {
+
+        }
+
+        func isBookmarked(news: Domain.News) throws -> Bool {
+            return true
+        }
+
+    }
+
+    static var previews: some View {
+        let news: News = .init(source: .init(id: "", name: "name"), title: "title", description: "dsc", url: "url", publishedAt: .now, content: "content")
+        return FeedDetailView(viewModel: FeedDetailViewModel(news: news, feedBookmarkUsecases: FeedBookmarkUsecasesMock()))
+    }
+}

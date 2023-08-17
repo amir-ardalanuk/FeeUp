@@ -17,7 +17,7 @@ struct FeedListView: View {
 
     init(viewModel: any FeedListViewModelProtocol) {
         self.viewModel = viewModel
-        self.state = viewModel.state
+        self._state = .init(initialValue: viewModel.state)
     }
 
     var body: some View {
@@ -37,7 +37,7 @@ struct FeedListView: View {
                         }
                         ForEach(state.newsList, id: \.self) { value in
                             NavigationLink(value: value) {
-                                FeedRowView(news: value).frame(height: 100)
+                                FeedRowView(news: value).frame(height: 100).foregroundColor(.black)
                             }
                         }
                         if state.hasLoadMore {
@@ -60,7 +60,6 @@ struct FeedListView: View {
                     self.state = state
                 }
                 .navigationDestination(for: News.self) { news in
-                    @Environment(\.appDependencyValue) var appDependencies: AppDependencies
                     FeedDetailView(viewModel: FeedDetailViewModel(news: news, feedBookmarkUsecases: appDependencies.dependencies.feedBookmarkUsecases))
                 }
         }.onAppear {
