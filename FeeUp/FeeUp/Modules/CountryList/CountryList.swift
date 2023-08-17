@@ -6,3 +6,16 @@
 //
 
 import Foundation
+import Domain
+
+enum CountryList {
+    struct State: StateProtocol {
+        var countryList: FeedCountries
+        var currentSelected: FeedCountry?
+    }
+    enum Action {
+        case fetchCountries
+    }
+    enum Destination {}
+}
+
