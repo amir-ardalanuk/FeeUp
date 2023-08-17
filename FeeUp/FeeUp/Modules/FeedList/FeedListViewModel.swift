@@ -103,14 +103,21 @@ final class FeedListViewModel: ViewModel {
                     }
                 }
             } catch {
-                print(error)
+                currentQuery.update { $0.page -= 1 }
+                stateSubject.value.update {
+                    $0.errorMessage = error.localizedDescription
+                    $0.isLoadingList = false
+                }
             }
         }
     }
 
     @MainActor
     private func fetchLatestFeed() {
-        stateSubject.value.update { $0.isLoadingList = true }
+        stateSubject.value.update {
+            $0.isLoadingList = true
+            $0.errorMessage = nil
+        }
         Task {
             do {
                 currentQuery.update {
@@ -126,7 +133,10 @@ final class FeedListViewModel: ViewModel {
                     }
                 }
             } catch {
-                print(error)
+                stateSubject.value.update {
+                    $0.errorMessage = error.localizedDescription
+                    $0.isLoadingList = false
+                }
             }
         }
     }

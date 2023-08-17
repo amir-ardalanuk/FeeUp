@@ -23,11 +23,14 @@ struct FeedListView: View {
             VStack {
                 ScrollView {
                     LazyVStack {
+                        if state.errorMessage != nil {
+                            Text("Can't fetch news for \(state.errorMessage ?? "unknown")").foregroundColor(.red)
+                        }
                         if state.isLoadingList {
                             Text("Fetching latest News ...")
                         }
 
-                        if !state.isLoadingList, state.newsList.isEmpty {
+                        if !state.isLoadingList, state.errorMessage == nil, state.newsList.isEmpty {
                             Text("Can't Find any news ...")
                         }
                         ForEach(state.newsList, id: \.self) { value in
@@ -49,7 +52,7 @@ struct FeedListView: View {
             }), placement: SwiftUI.SearchFieldPlacement.automatic)
                 .navigationTitle("FeeUP")
                 .navigationBarTitleDisplayMode(.inline)
-                .onReceive(viewModel.statePublisher) { state in
+                .onReceive(viewModel.statePublisher.receive(on: DispatchQueue.main)) { state in
                     self.state = state
                 }
         }.onAppear {
