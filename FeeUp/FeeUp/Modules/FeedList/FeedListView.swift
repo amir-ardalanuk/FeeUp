@@ -11,7 +11,7 @@ import Combine
 
 struct FeedListView: View {
     @Environment(\.appDependencyValue) var appDependencies: AppDependencies
-    
+    @State private var showingCountrySheet = false
     @State private var state: FeedList.State
     let viewModel: any FeedListViewModelProtocol
 
@@ -62,8 +62,20 @@ struct FeedListView: View {
                 .navigationDestination(for: News.self) { news in
                     FeedDetailView(viewModel: FeedDetailViewModel(news: news, feedBookmarkUsecases: appDependencies.dependencies.feedBookmarkUsecases))
                 }
+                .toolbar {
+                    Button(action: {
+                        showingCountrySheet = true
+                    }, label: {
+                        Text("\(state.selectedCountry?.flag ?? "Loading")")
+                    })
+                }
         }.onAppear {
-            viewModel.handle(action: .fetchLatestFeed)
+            viewModel.handle(action: .fetchCountries)
+        }.sheet(isPresented: $showingCountrySheet) {
+            CountryListView(viewModel: CountryListViewModel(defaultSelected: state.selectedCountry, feedUsecases: appDependencies.dependencies.feedUsecases)) { new in
+                showingCountrySheet = false
+                viewModel.handle(action: .changeCountry(new))
+            }
         }
     }
 

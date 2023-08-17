@@ -20,7 +20,7 @@ final class FeedListViewModel: ViewModel {
     private let stateSubject: CurrentValueSubject<FeedList.State, Never>
     private let destinationSubject: PassthroughSubject<FeedList.Destination, Never>
     private let feedUsecases: FeedUsecases
-    private var currentQuery: FeedQuery
+    private var currentQuery: FeedQuery?
     private var searchTask: Task<Void, Error>?
     var state: FeedList.State { stateSubject.value }
 
@@ -35,9 +35,9 @@ final class FeedListViewModel: ViewModel {
     // MARK: - init
     init(feedUsecases: FeedUsecases) {
         self.feedUsecases = feedUsecases
-        self.stateSubject = .init(.init(newsList: [], isLoadingList: true, hasLoadMore: false, isLoadingMore: false, search: nil))
+        // TODO: It's better to get countries then
+        self.stateSubject = .init(.init(newsList: [], isLoadingList: true, hasLoadMore: false, isLoadingMore: false, search: nil, selectedCountry: nil))
         self.destinationSubject = .init()
-        self.currentQuery = .init(country: .init(key: "us", name: "USA", flag: ""))
     }
 
     @MainActor
@@ -49,7 +49,29 @@ final class FeedListViewModel: ViewModel {
             fetchLatestFeed()
         case .loadNextPage:
             fetchNextPage()
+        case let .changeCountry(country):
+            changeCountry(country)
+        case .fetchCountries:
+            fetchCountries()
         }
+    }
+
+    private func fetchCountries() {
+        Task {
+            guard let first = try? await feedUsecases.countries().first else {
+                return stateSubject.value.update { $0.errorMessage = "Cannot fetch countries"}
+            }
+            currentQuery = .init(country: first)
+            stateSubject.value.update { $0.selectedCountry = first }
+        }
+
+    }
+
+    @MainActor
+    private func changeCountry(_ country: FeedCountry) {
+        currentQuery?.update { $0.country = country }
+        stateSubject.value.update { $0.selectedCountry = country }
+        fetchLatestFeed()
     }
 
     @MainActor
@@ -66,11 +88,17 @@ final class FeedListViewModel: ViewModel {
         searchTask = Task {
             try await Task.sleep(nanoseconds: 1_000_000_000)
             guard !Task.isCancelled else { return }
-            currentQuery.update {
+            currentQuery?.update {
                 $0.page = 1
                 $0.query = text
             }
             do {
+                guard let currentQuery else {
+                    return stateSubject.value.update {
+                        $0.isLoadingList = false
+                        $0.errorMessage = "Somthing goes wrong, refresh again"
+                    }
+                }
                 let result = try await feedUsecases.fetchLatest(query: currentQuery)
                 await MainActor.run {
                     stateSubject.value.update {
@@ -92,8 +120,14 @@ final class FeedListViewModel: ViewModel {
     private func fetchNextPage() {
         stateSubject.value.update { $0.isLoadingMore = true }
         Task {
-            currentQuery.update { $0.page += 1 }
+            currentQuery?.update { $0.page += 1 }
             do {
+                guard let currentQuery else {
+                    return stateSubject.value.update {
+                        $0.isLoadingList = false
+                        $0.errorMessage = "Somthing goes wrong, refresh again"
+                    }
+                }
                 let result = try await feedUsecases.fetchLatest(query: currentQuery)
                 await MainActor.run {
                     stateSubject.value.update {
@@ -103,7 +137,7 @@ final class FeedListViewModel: ViewModel {
                     }
                 }
             } catch {
-                currentQuery.update { $0.page -= 1 }
+                currentQuery?.update { $0.page -= 1 }
                 stateSubject.value.update {
                     $0.errorMessage = error.localizedDescription
                     $0.isLoadingList = false
@@ -120,9 +154,16 @@ final class FeedListViewModel: ViewModel {
         }
         Task {
             do {
-                currentQuery.update {
+                currentQuery?.update {
                     $0.page = 1
                     $0.query = nil
+                }
+                guard let currentQuery else {
+                    fetchCountries()
+                    return stateSubject.value.update {
+                        $0.isLoadingList = false
+                        $0.errorMessage = "Somthing goes wrong, refresh again"
+                    }
                 }
                 let result = try await feedUsecases.fetchLatest(query: currentQuery)
                 await MainActor.run {

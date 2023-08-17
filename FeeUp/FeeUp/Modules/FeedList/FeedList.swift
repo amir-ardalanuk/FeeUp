@@ -16,12 +16,15 @@ enum FeedList {
         var isLoadingMore: Bool
         var search: String?
         var errorMessage: String?
+        var selectedCountry: FeedCountry?
     }
 
     enum Action {
         case search(String)
         case fetchLatestFeed
         case loadNextPage
+        case changeCountry(FeedCountry)
+        case fetchCountries
     }
 
     enum Destination {}
