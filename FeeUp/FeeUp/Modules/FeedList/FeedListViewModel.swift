@@ -35,32 +35,60 @@ final class FeedListViewModel: ViewModel {
     // MARK: - init
     init(feedUsecases: FeedUsecases) {
         self.feedUsecases = feedUsecases
-        self.stateSubject = .init(.init(newsList: [], isLoadingList: true, search: nil))
+        self.stateSubject = .init(.init(newsList: [], isLoadingList: true, hasLoadMore: false, isLoadingMore: false, search: nil))
         self.destinationSubject = .init()
         self.currentQuery = .init(country: .init(key: "us", name: "USA", flag: ""))
     }
 
+    @MainActor
     func handle(action: FeedList.Action) {
         switch action {
         case let .search(text):
             stateSubject.value.update { $0.search = text }
         case .fetchLatestFeed:
             fetchLatestFeed()
+        case .loadNextPage:
+            fetchNextPage()
         }
     }
 
-    private func fetchLatestFeed() {
+    @MainActor
+    private func fetchNextPage() {
+        stateSubject.value.update { $0.isLoadingMore = true }
         Task {
+            currentQuery.update { $0.page += 1 }
             do {
                 let result = try await feedUsecases.fetchLatest(query: currentQuery)
                 await MainActor.run {
-                    stateSubject.value.update { $0.newsList = result }
+                    stateSubject.value.update {
+                        $0.newsList += result
+                        $0.hasLoadMore = result.count == currentQuery.pageSize
+                        $0.isLoadingMore = false
+                    }
                 }
             } catch {
                 print(error)
             }
-
         }
+    }
 
+    @MainActor
+    private func fetchLatestFeed() {
+        stateSubject.value.update { $0.isLoadingList = true }
+        Task {
+            do {
+                currentQuery.update { $0.page = 1 }
+                let result = try await feedUsecases.fetchLatest(query: currentQuery)
+                await MainActor.run {
+                    stateSubject.value.update {
+                        $0.newsList = result
+                        $0.isLoadingList = false
+                        $0.hasLoadMore = result.count == currentQuery.pageSize
+                    }
+                }
+            } catch {
+                print(error)
+            }
+        }
     }
 }

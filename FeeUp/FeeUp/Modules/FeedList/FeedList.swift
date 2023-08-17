@@ -12,13 +12,18 @@ enum FeedList {
     struct State: StateProtocol {
         var newsList: [News]
         var isLoadingList: Bool
+        var hasLoadMore: Bool
+        var isLoadingMore: Bool
         var search: String?
     }
 
     enum Action {
         case search(String)
         case fetchLatestFeed
+        case loadNextPage
     }
 
     enum Destination {}
 }
+
+extension FeedQuery: StateProtocol { }

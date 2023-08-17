@@ -15,6 +15,8 @@
 		292E71FD2A88DC6200E82933 /* FeeUpUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292E71FC2A88DC6200E82933 /* FeeUpUITests.swift */; };
 		292E71FF2A88DC6200E82933 /* FeeUpUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292E71FE2A88DC6200E82933 /* FeeUpUITestsLaunchTests.swift */; };
 		292E72122A88DED100E82933 /* FeedRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292E72112A88DED100E82933 /* FeedRowView.swift */; };
+		29B7F43B2A8E34110098445D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 29B7F43A2A8E34110098445D /* Kingfisher */; };
+		29B7F43D2A8E34FF0098445D /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B7F43C2A8E34FF0098445D /* RemoteImage.swift */; };
 		29C229122A8D05EF00D85333 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C229112A8D05EF00D85333 /* ViewModel.swift */; };
 		29C229142A8D05FA00D85333 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C229132A8D05FA00D85333 /* State.swift */; };
 		29C229162A8D069F00D85333 /* FeedListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C229152A8D069F00D85333 /* FeedListView.swift */; };
@@ -58,6 +60,7 @@
 		292E71FC2A88DC6200E82933 /* FeeUpUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeeUpUITests.swift; sourceTree = "<group>"; };
 		292E71FE2A88DC6200E82933 /* FeeUpUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeeUpUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		292E72112A88DED100E82933 /* FeedRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRowView.swift; sourceTree = "<group>"; };
+		29B7F43C2A8E34FF0098445D /* RemoteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImage.swift; sourceTree = "<group>"; };
 		29C229112A8D05EF00D85333 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		29C229132A8D05FA00D85333 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		29C229152A8D069F00D85333 /* FeedListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedListView.swift; sourceTree = "<group>"; };
@@ -74,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29B7F43B2A8E34110098445D /* Kingfisher in Frameworks */,
 				29C229242A8D07B000D85333 /* Persistence in Frameworks */,
 				29C229222A8D07B000D85333 /* Network in Frameworks */,
 				29C229262A8D07B000D85333 /* Repository in Frameworks */,
@@ -124,6 +128,7 @@
 		292E71E02A88DC6100E82933 /* FeeUp */ = {
 			isa = PBXGroup;
 			children = (
+				29B7F4362A8E273F0098445D /* Views */,
 				29C229272A8D114000D85333 /* AppDependencies */,
 				29C229102A8D05E600D85333 /* Base */,
 				292E720B2A88DE6300E82933 /* Modules */,
@@ -187,6 +192,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		29B7F4362A8E273F0098445D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				29B7F43C2A8E34FF0098445D /* RemoteImage.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		29C229102A8D05E600D85333 /* Base */ = {
 			isa = PBXGroup;
 			children = (
@@ -243,6 +256,7 @@
 				29C229212A8D07B000D85333 /* Network */,
 				29C229232A8D07B000D85333 /* Persistence */,
 				29C229252A8D07B000D85333 /* Repository */,
+				29B7F43A2A8E34110098445D /* Kingfisher */,
 			);
 			productName = FeeUp;
 			productReference = 292E71DE2A88DC6100E82933 /* FeeUp.app */;
@@ -316,6 +330,9 @@
 				Base,
 			);
 			mainGroup = 292E71D52A88DC6100E82933;
+			packageReferences = (
+				29B7F4392A8E34110098445D /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = 292E71DF2A88DC6100E82933 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -362,6 +379,7 @@
 				29C2291B2A8D077500D85333 /* FeedList.swift in Sources */,
 				292E71E42A88DC6100E82933 /* ContentView.swift in Sources */,
 				29C229192A8D06CA00D85333 /* FeedListViewModel.swift in Sources */,
+				29B7F43D2A8E34FF0098445D /* RemoteImage.swift in Sources */,
 				292E71E22A88DC6100E82933 /* FeeUpApp.swift in Sources */,
 				29C229162A8D069F00D85333 /* FeedListView.swift in Sources */,
 				29C229292A8D115B00D85333 /* AppDependencies.swift in Sources */,
@@ -693,7 +711,23 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		29B7F4392A8E34110098445D /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		29B7F43A2A8E34110098445D /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 29B7F4392A8E34110098445D /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		29C2291D2A8D07B000D85333 /* API */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = API;

@@ -20,18 +20,15 @@ struct FeedRowView: View {
 
     var body: some View {
         HStack(spacing: Constants.spacing) {
+
             Color.gray
-                .overlay(
-                    // You can load the image asynchronously from the web using a SwiftUI remote image view
-                    Image(systemName: "circule")
-                        .aspectRatio(contentMode: .fill)
-                )
+                .overlay(remoteView())
                 .aspectRatio(contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: Constants.radius))
 
             // News Details
             VStack(alignment: .leading, spacing: Constants.spacing) {
-                Text(news.title)
+                Text(news.title ?? "-")
                     .font(.headline)
                 Spacer()
                 HStack {
@@ -46,6 +43,15 @@ struct FeedRowView: View {
             }.padding(.vertical, 8.0)
         }
         .padding(10)
+    }
+
+    @ViewBuilder
+    func remoteView() -> some View {
+        if let urlString = news.urlToImage, let url = URL(string: urlString) {
+            RemoteImage(url: url)
+        } else {
+            EmptyView()
+        }
     }
 }
 
