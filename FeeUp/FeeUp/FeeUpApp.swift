@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct FeeUpApp: App {
-    let appDependencies: AppDependencies = AppDI.shared
+    @Environment(\.appDependencyValue) var appDependencies: AppDependencies
 
     var body: some Scene {
 
