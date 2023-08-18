@@ -9,24 +9,27 @@ import Foundation
 import XCTest
 import Mocks
 import Domain
+import Combine
 @testable import FeeUp
 
 final class FeedListViewModelTest: XCTestCase {
     var sut: FeedListViewModel!
     var feedUsecasesMock: FeedUsecasesMock!
-
+    var cancellables: Set<AnyCancellable>!
     enum Constant {
         static let country: FeedCountry = .init(key: "us", name: "USA", flag: "")
     }
     override func setUp() {
         super.setUp()
         feedUsecasesMock = .init()
+        cancellables = .init()
     }
 
     override func tearDown() {
         super.tearDown()
         feedUsecasesMock = nil
         sut = nil
+        cancellables = nil
     }
 }
 
@@ -59,12 +62,12 @@ extension FeedListViewModelTest {
 
         var resultState: [FeedList.State] = []
         sut = .init(query: query, feedUsecases: feedUsecasesMock)
-        let cancellable = sut.statePublisher.dropFirst().sink { state in
+        sut.statePublisher.dropFirst().sink { state in
             resultState.append(state)
             if state.isLoadingList == false {
                 expectation.fulfill()
             }
-        }
+        }.store(in: &cancellables)
         await sut.handle(action: .search(searchText))
         await fulfillment(of: [expectation], timeout: 1.5)
         // before call api
@@ -89,12 +92,12 @@ extension FeedListViewModelTest {
 
         sut = .init(query: query, feedUsecases: feedUsecasesMock)
         var resultState: [FeedList.State] = []
-        let cancellable = sut.statePublisher.dropFirst().sink { state in
+        sut.statePublisher.dropFirst().sink { state in
             resultState.append(state)
             if state.isLoadingList == false {
                 expectation.fulfill()
             }
-        }
+        }.store(in: &cancellables)
         await sut.handle(action: .search(searchText))
         await fulfillment(of: [expectation], timeout: 1.5)
         // before call api
@@ -111,3 +114,54 @@ extension FeedListViewModelTest {
         XCTAssertEqual(resultState.last?.errorMessage, localError.localizedDescription)
     }
 }
+
+// MARK: - fetchLatestFeed action
+extension FeedListViewModelTest {
+    func test_fetchLatestFeedAction_whenQueryIsEmpty() async {
+        let expectation = expectation(description: "test search")
+        let query = FeedQuery(country: Constant.country)
+        let newsStub: News = .stub()
+        let country = Constant.country
+        var resultState: [FeedList.State] = []
+        feedUsecasesMock.given(.countries(willReturn: [country]))
+        feedUsecasesMock.given(.fetchLatest(query: .value(query), willReturn: [newsStub]))
+
+        sut = .init(query: nil, feedUsecases: feedUsecasesMock)
+        sut.statePublisher.dropFirst().sink { state in
+            resultState.append(state)
+            if !state.newsList.isEmpty {
+                expectation.fulfill()
+            }
+        }.store(in: &cancellables)
+        await sut.handle(action: .fetchLatestFeed)
+        await fulfillment(of: [expectation], timeout: 1.0)
+        feedUsecasesMock.verify(.countries(), count: .once)
+        feedUsecasesMock.verify(.fetchLatest(query: .value(query)), count: .once)
+        XCTAssertEqual(resultState.last?.isLoadingMore, false)
+        XCTAssertEqual(resultState.last?.selectedCountry, country)
+        XCTAssertEqual(resultState.last?.hasLoadMore, false)
+    }
+
+    func test_fetchLatestFeedAction_whenUsecaseThrowAnError() async {
+        let expectation = expectation(description: "test search")
+        let query = FeedQuery(country: Constant.country)
+        var resultState: [FeedList.State] = []
+        let localError = NSError(domain: "Server Error", code: 500)
+        feedUsecasesMock.given(.fetchLatest(query: .value(query), willThrow: localError))
+
+        sut = .init(query: query, feedUsecases: feedUsecasesMock)
+        sut.statePublisher.dropFirst().sink { state in
+            resultState.append(state)
+            if state.errorMessage != nil {
+                expectation.fulfill()
+            }
+        }.store(in: &cancellables)
+        await sut.handle(action: .fetchLatestFeed)
+        await fulfillment(of: [expectation], timeout: 1.0)
+        feedUsecasesMock.verify(.fetchLatest(query: .value(query)), count: .once)
+        XCTAssertEqual(resultState.last?.errorMessage, localError.localizedDescription)
+        XCTAssertEqual(resultState.last?.isLoadingList, false)
+        XCTAssertEqual(resultState.last?.newsList, [])
+    }
+}
+

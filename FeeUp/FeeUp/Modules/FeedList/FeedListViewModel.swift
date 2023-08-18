@@ -172,11 +172,10 @@ final class FeedListViewModel: ViewModel {
                     $0.query = nil
                 }
                 guard let currentQuery else {
-                    fetchCountries()
-                    return stateSubject.value.update {
+                     stateSubject.value.update {
                         $0.isLoadingList = false
-                        $0.errorMessage = "Somthing goes wrong, refresh again"
                     }
+                    return fetchCountries()
                 }
                 let result = try await feedUsecases.fetchLatest(query: currentQuery)
                 await MainActor.run {
