@@ -70,6 +70,7 @@ extension FeedListViewModelTest {
         }.store(in: &cancellables)
         await sut.handle(action: .search(searchText))
         await fulfillment(of: [expectation], timeout: 1.5)
+        XCTAssertEqual(sut?.currentQuery?.query, searchText)
         // before call api
         XCTAssertEqual(resultState.first?.newsList, [])
         XCTAssertEqual(resultState.first?.isLoadingList, true)
@@ -100,6 +101,7 @@ extension FeedListViewModelTest {
         }.store(in: &cancellables)
         await sut.handle(action: .search(searchText))
         await fulfillment(of: [expectation], timeout: 1.5)
+        XCTAssertEqual(sut?.currentQuery?.query, searchText)
         // before call api
         XCTAssertEqual(resultState.first?.newsList, [])
         XCTAssertEqual(resultState.first?.isLoadingList, true)
@@ -112,6 +114,25 @@ extension FeedListViewModelTest {
         XCTAssertEqual(resultState.last?.search, searchText)
         XCTAssertEqual(resultState.last?.isLoadingMore, false)
         XCTAssertEqual(resultState.last?.errorMessage, localError.localizedDescription)
+    }
+
+    func test_search_whenQueryIsEmpty() async {
+        let expectation = expectation(description: "test search")
+        let query = FeedQuery(country: Constant.country)
+
+        var resultState: [FeedList.State] = []
+        sut = .init(query: nil, feedUsecases: feedUsecasesMock)
+        sut.statePublisher.dropFirst().sink { state in
+            resultState.append(state)
+            if state.errorMessage != nil {
+                expectation.fulfill()
+            }
+        }.store(in: &cancellables)
+        await sut.handle(action: .search("any"))
+        await fulfillment(of: [expectation], timeout: 1.5)
+        feedUsecasesMock.verify(.fetchLatest(query: .any), count: .never)
+        XCTAssertEqual(resultState.last?.errorMessage, "Somthing goes wrong, refresh again")
+        XCTAssertEqual(resultState.last?.isLoadingList, false)
     }
 }
 

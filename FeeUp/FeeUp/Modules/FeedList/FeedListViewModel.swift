@@ -89,6 +89,7 @@ final class FeedListViewModel: ViewModel {
 
     @MainActor
     private func search(text: String) {
+        searchTask?.cancel()
         guard !text.isEmpty else {
             return fetchLatestFeed()
         }
