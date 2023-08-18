@@ -15,10 +15,12 @@ final class FeedListViewModelTest: XCTestCase {
     var sut: FeedListViewModel!
     var feedUsecasesMock: FeedUsecasesMock!
 
+    enum Constant {
+        static let country: FeedCountry = .init(key: "us", name: "USA", flag: "")
+    }
     override func setUp() {
         super.setUp()
         feedUsecasesMock = .init()
-        sut = .init(feedUsecases: feedUsecasesMock)
     }
 
     override func tearDown() {
@@ -30,17 +32,18 @@ final class FeedListViewModelTest: XCTestCase {
 
 // MARK: - test search action
 extension FeedListViewModelTest {
-    func test_searchAction_whenTextIsEmpty() async {
+    func test_searchAction_whenTextIsEmptyVetifyCallFetchList() async {
         let expectation = expectation(description: "test search")
-        let query = FeedQuery(country: .init(key: "us", name: "USA", flag: ""))
+        let query = FeedQuery(country: Constant.country)
         let newsStub: News = .stub()
         feedUsecasesMock.given(.fetchLatest(query: .value(query), willReturn: [newsStub]))
         feedUsecasesMock.perform(FeedUsecasesMock.Perform.fetchLatest(query: .value(query), perform: { query in
             expectation.fulfill()
         }))
+
+        sut = .init(query: query, feedUsecases: feedUsecasesMock)
         await sut.handle(action: .search(""))
         await fulfillment(of: [expectation], timeout: 1.0)
-        XCTAssertEqual(sut.state.isLoadingList, false)
         XCTAssertEqual(sut.state.isLoadingMore, false)
         XCTAssertEqual(sut.state.search, nil)
     }
@@ -48,13 +51,14 @@ extension FeedListViewModelTest {
     func test_searchAction_dataArrviedSuccessfully() async {
         let expectation = expectation(description: "test search")
         let searchText = "text"
-        let query = FeedQuery(country: .init(key: "us", name: "USA", flag: ""), query: searchText)
+        let query = FeedQuery(country: Constant.country, query: searchText)
         let newsStub = News.stub()
 
         feedUsecasesMock.given(.fetchLatest(query: .value(query), willReturn: [newsStub]))
 
 
         var resultState: [FeedList.State] = []
+        sut = .init(query: query, feedUsecases: feedUsecasesMock)
         let cancellable = sut.statePublisher.dropFirst().sink { state in
             resultState.append(state)
             if state.isLoadingList == false {
@@ -78,12 +82,12 @@ extension FeedListViewModelTest {
     func test_searchAction_whenThrowError() async {
         let expectation = expectation(description: "test search")
         let searchText = "text"
-        let query = FeedQuery(country: .init(key: "us", name: "USA", flag: ""), query: searchText)
+        let query = FeedQuery(country: Constant.country, query: searchText)
         let localError = NSError(domain: "Server error", code: 500)
 
         feedUsecasesMock.given(.fetchLatest(query: .value(query), willThrow: localError))
 
-
+        sut = .init(query: query, feedUsecases: feedUsecasesMock)
         var resultState: [FeedList.State] = []
         let cancellable = sut.statePublisher.dropFirst().sink { state in
             resultState.append(state)

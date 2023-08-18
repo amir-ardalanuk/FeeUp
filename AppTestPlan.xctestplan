@@ -1,0 +1,59 @@
+{
+  "configurations" : [
+    {
+      "id" : "24C03E9F-F239-45B4-A11C-0658FF5970F7",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:LocalPackages\/Packages",
+        "identifier" : "APITests",
+        "name" : "APITests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:LocalPackages\/Packages",
+        "identifier" : "DomainTests",
+        "name" : "DomainTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:LocalPackages\/Packages",
+        "identifier" : "NetworkTests",
+        "name" : "NetworkTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:LocalPackages\/Packages",
+        "identifier" : "PersistenceTests",
+        "name" : "PersistenceTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:LocalPackages\/Packages",
+        "identifier" : "RepositoryTests",
+        "name" : "RepositoryTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:FeeUp.xcodeproj",
+        "identifier" : "292E71ED2A88DC6200E82933",
+        "name" : "FeeUpTests"
+      }
+    }
+  ],
+  "version" : 1
+}

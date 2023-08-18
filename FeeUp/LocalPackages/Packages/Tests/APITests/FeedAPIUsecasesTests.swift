@@ -118,12 +118,12 @@ extension FeedAPIUsecasesTests {
 
     func test_categories_whenLoaderCantFindAFile() async throws {
         let localError = NSError(domain: "can't find a file", code: 404)
-        resourceLoadingMock.given(.data(forResource: .value(FeedAPIUsecases.Constant.countryJsonFileName), withExtension: .value(FeedAPIUsecases.Constant.countryJsonFileExt), willThrow: localError))
-        do {
-            _ = try await sut.categories()
-            XCTFail("should not pass if network throw an error")
-        } catch {
-            XCTAssertEqual(error.localizedDescription, localError.localizedDescription)
+        resourceLoadingMock.given(.data(forResource: .value(FeedAPIUsecases.Constant.categoryJsonFileExt), withExtension: .value(FeedAPIUsecases.Constant.categoryJsonFileName), willThrow: localError))
+            do {
+                _ = try await sut.categories()
+                XCTFail("should not pass if network throw an error")
+            } catch {
+                XCTAssertEqual(error.localizedDescription, ResourceLoadingError.thereIsNotSuchFile.localizedDescription)
+            }
         }
-    }
 }

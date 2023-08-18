@@ -33,11 +33,14 @@ final class FeedListViewModel: ViewModel {
     }
 
     // MARK: - init
-    init(feedUsecases: FeedUsecases) {
+    init(query: FeedQuery? = nil, feedUsecases: FeedUsecases) {
         self.feedUsecases = feedUsecases
         // TODO: It's better to get countries then
         self.stateSubject = .init(.init(newsList: [], isLoadingList: true, hasLoadMore: false, isLoadingMore: false, search: nil, selectedCountry: nil))
         self.destinationSubject = .init()
+        if let query {
+            currentQuery = query
+        }
     }
 
     @MainActor

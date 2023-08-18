@@ -62,6 +62,7 @@
 		291A024A2A8EB72B008685FB /* CategoryList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryList.swift; sourceTree = "<group>"; };
 		291A024C2A8EB858008685FB /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 		291A024E2A8EBBD6008685FB /* CategoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListView.swift; sourceTree = "<group>"; };
+		291A02502A8EC464008685FB /* AppTestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = AppTestPlan.xctestplan; path = ../AppTestPlan.xctestplan; sourceTree = "<group>"; };
 		292E71DE2A88DC6100E82933 /* FeeUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FeeUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		292E71E12A88DC6100E82933 /* FeeUpApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeeUpApp.swift; sourceTree = "<group>"; };
 		292E71E52A88DC6200E82933 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -88,7 +89,6 @@
 		29C229282A8D115B00D85333 /* AppDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependencies.swift; sourceTree = "<group>"; };
 		29C2292A2A8D125F00D85333 /* DependencyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyManager.swift; sourceTree = "<group>"; };
 		29FAA9482A88E9C7003A9440 /* Packages */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Packages; sourceTree = "<group>"; };
-		29FAA94A2A890EF5003A9440 /* NetworkTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = NetworkTests.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +136,7 @@
 		292E71D52A88DC6100E82933 = {
 			isa = PBXGroup;
 			children = (
+				291A02502A8EC464008685FB /* AppTestPlan.xctestplan */,
 				29FAA9492A88E9CB003A9440 /* LocalPackages */,
 				292E71E02A88DC6100E82933 /* FeeUp */,
 				292E71F12A88DC6200E82933 /* FeeUpTests */,
@@ -297,7 +298,6 @@
 		29FAA9492A88E9CB003A9440 /* LocalPackages */ = {
 			isa = PBXGroup;
 			children = (
-				29FAA94A2A890EF5003A9440 /* NetworkTests.xctestplan */,
 				29FAA9482A88E9C7003A9440 /* Packages */,
 			);
 			path = LocalPackages;

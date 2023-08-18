@@ -1,6 +1,6 @@
 import Foundation
 
-enum ResourceLoadingError: Error {
+public enum ResourceLoadingError: Error {
     case thereIsNotSuchFile
 }
 

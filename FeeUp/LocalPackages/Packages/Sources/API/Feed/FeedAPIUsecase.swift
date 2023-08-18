@@ -37,22 +37,14 @@ public final class FeedAPIUsecases: FeedAPIProtocol {
 
     public func countries() async throws -> Domain.FeedCountries {
         guard let jsonData = try resourceLoader.data(forResource: Constant.countryJsonFileName, withExtension: Constant.countryJsonFileExt) else {
-            #if DEBUG
-            fatalError("Can't find the file")
-            #else
-            return []
-            #endif
+            throw ResourceLoadingError.thereIsNotSuchFile
         }
         return try requestManager.decoder.decode(jsonData, type: FeedCountries.self)
     }
 
     public func categories() async throws -> Domain.FeedCategories {
         guard let jsonData = try resourceLoader.data(forResource: Constant.categoryJsonFileName, withExtension: Constant.categoryJsonFileExt) else {
-            #if DEBUG
-            fatalError("Can't find the file")
-            #else
-            return []
-            #endif
+            throw ResourceLoadingError.thereIsNotSuchFile
         }
         return try requestManager.decoder.decode(jsonData, type: FeedCategories.self)
     }
