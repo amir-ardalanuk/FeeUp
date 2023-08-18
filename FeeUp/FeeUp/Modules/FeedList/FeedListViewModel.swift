@@ -20,7 +20,7 @@ final class FeedListViewModel: ViewModel {
     private let stateSubject: CurrentValueSubject<FeedList.State, Never>
     private let destinationSubject: PassthroughSubject<FeedList.Destination, Never>
     private let feedUsecases: FeedUsecases
-    private var currentQuery: FeedQuery?
+    private(set) var currentQuery: FeedQuery?
     private var searchTask: Task<Void, Error>?
     var state: FeedList.State { stateSubject.value }
 
@@ -153,7 +153,7 @@ final class FeedListViewModel: ViewModel {
                 currentQuery?.update { $0.page -= 1 }
                 stateSubject.value.update {
                     $0.errorMessage = error.localizedDescription
-                    $0.isLoadingList = false
+                    $0.isLoadingMore = false
                 }
             }
         }

@@ -164,4 +164,72 @@ extension FeedListViewModelTest {
         XCTAssertEqual(resultState.last?.newsList, [])
     }
 }
+// MARK: - fetchNextPage action
+extension FeedListViewModelTest {
+    func test_fetchNextPageAction_whenQueryIsEmpty() async {
+        let expectation = expectation(description: "test search")
+        let query = FeedQuery(country: Constant.country)
 
+        var resultState: [FeedList.State] = []
+        sut = .init(query: nil, feedUsecases: feedUsecasesMock)
+        sut.statePublisher.dropFirst().sink { state in
+            resultState.append(state)
+            if state.errorMessage != nil {
+                expectation.fulfill()
+            }
+        }.store(in: &cancellables)
+        await sut.handle(action: .loadNextPage)
+        await fulfillment(of: [expectation], timeout: 1.0)
+        feedUsecasesMock.verify(.fetchLatest(query: .any), count: .never)
+        XCTAssertEqual(resultState.last?.errorMessage, "Somthing goes wrong, refresh again")
+        XCTAssertEqual(resultState.last?.isLoadingList, false)
+    }
+
+    func test_fetchNextPageAction_whenUsecaseThrowAnError() async {
+        let expectation = expectation(description: "test search")
+        let query = FeedQuery(country: Constant.country)
+        let localError = NSError(domain: "Server Error", code: 500)
+        let changedQuery = query.updated { $0.page += 1 }
+        feedUsecasesMock.given(.fetchLatest(query: .value(changedQuery), willThrow: localError))
+
+        var resultState: [FeedList.State] = []
+        sut = .init(query: query, feedUsecases: feedUsecasesMock)
+        sut.statePublisher.dropFirst().sink { state in
+            resultState.append(state)
+            if state.errorMessage != nil {
+                expectation.fulfill()
+            }
+        }.store(in: &cancellables)
+        await sut.handle(action: .loadNextPage)
+        await fulfillment(of: [expectation], timeout: 1.0)
+        feedUsecasesMock.verify(.fetchLatest(query: .value(changedQuery)), count: .once)
+        XCTAssertEqual(resultState.last?.errorMessage, localError.localizedDescription)
+        XCTAssertEqual(resultState.last?.isLoadingMore, false)
+        XCTAssertEqual(sut.currentQuery?.page, query.page)
+    }
+
+    func test_fetchNextPageAction_whenUsecaseRetriveDataSuccessfully() async {
+        let expectation = expectation(description: "test search")
+        let query = FeedQuery(country: Constant.country)
+        let localError = NSError(domain: "Server Error", code: 500)
+        let changedQuery = query.updated { $0.page += 1 }
+        let news = [News.stub()]
+        feedUsecasesMock.given(.fetchLatest(query: .value(changedQuery), willReturn: news))
+
+        var resultState: [FeedList.State] = []
+        sut = .init(query: query, feedUsecases: feedUsecasesMock)
+        sut.statePublisher.dropFirst().sink { state in
+            resultState.append(state)
+            if !state.newsList.isEmpty {
+                expectation.fulfill()
+            }
+        }.store(in: &cancellables)
+        await sut.handle(action: .loadNextPage)
+        await fulfillment(of: [expectation], timeout: 1.0)
+        feedUsecasesMock.verify(.fetchLatest(query: .value(changedQuery)), count: .once)
+        XCTAssertEqual(resultState.last?.newsList, news)
+        XCTAssertEqual(resultState.last?.hasLoadMore, false)
+        XCTAssertEqual(sut.currentQuery?.page, changedQuery.page)
+    }
+    
+}
