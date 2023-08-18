@@ -14,7 +14,7 @@ struct FeedDetailView: View {
 
     init(viewModel: any FeedDetailViewModelProtocol) {
         self.viewModel = viewModel
-        self._state = .init(initialValue: viewModel.state) 
+        self._state = .init(initialValue: viewModel.state)
     }
 
     var body: some View {

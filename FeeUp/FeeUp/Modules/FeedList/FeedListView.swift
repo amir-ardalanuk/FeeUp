@@ -92,7 +92,7 @@ struct FeedListView: View {
     }
 
     func refresh() async {
-        var cancellabe: AnyCancellable? = nil
+        var cancellabe: AnyCancellable?
         await withCheckedContinuation { continuation in
             cancellabe = viewModel.statePublisher.dropFirst().first(where: { $0.isLoadingList == false }).sink { _ in
                 continuation.resume()

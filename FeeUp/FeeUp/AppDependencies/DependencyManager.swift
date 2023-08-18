@@ -31,7 +31,6 @@ final class DependencyManager: Dependencies {
         FeedRepository(feedAPI: feedAPI, feedBookmarkPersistence: feedPersistencing)
     }()
 
-
     var feedUsecases: FeedUsecases { feedRepository }
 
     var feedBookmarkUsecases: FeedBookmarkUsecases {  feedRepository }

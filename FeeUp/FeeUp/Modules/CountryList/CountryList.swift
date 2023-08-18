@@ -18,4 +18,3 @@ enum CountryList {
     }
     enum Destination {}
 }
-
