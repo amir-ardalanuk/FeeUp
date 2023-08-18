@@ -254,3 +254,50 @@ extension FeedListViewModelTest {
     }
     
 }
+// MARK: - changeCountry action
+extension FeedListViewModelTest {
+    func test_changeCountryAction() async {
+        let expectation = expectation(description: "test search")
+        let query = FeedQuery(country: Constant.country)
+        let newCountry = FeedCountry(key: "sec", name: "sec", flag: "")
+
+        var resultState: [FeedList.State] = []
+        feedUsecasesMock.given(.fetchLatest(query: .value(query.updated { $0.country = newCountry}), willReturn: [.stub()]))
+        sut = .init(query: query, feedUsecases: feedUsecasesMock)
+        feedUsecasesMock.perform(.fetchLatest(query: .value(query.updated { $0.country = newCountry}), perform: { _ in
+            expectation.fulfill()
+        }))
+        sut.statePublisher.dropFirst().sink { state in
+            resultState.append(state)
+        }.store(in: &cancellables)
+        await sut.handle(action: .changeCountry(newCountry))
+        await fulfillment(of: [expectation], timeout: 1.0)
+        feedUsecasesMock.verify(.fetchLatest(query: .value(query.updated { $0.country = newCountry})), count: .once)
+        XCTAssertEqual(sut.currentQuery?.country, newCountry)
+        XCTAssertEqual(resultState.last?.selectedCountry, newCountry)
+    }
+}
+
+// MARK: - changeCateogry action
+extension FeedListViewModelTest {
+    func test_changeCategoryAction() async {
+        let expectation = expectation(description: "test search")
+        let query = FeedQuery(country: Constant.country)
+        let newCategory = FeedCategory(key: "test", name: "test", emoji: "")
+        let newCategoryQuery = query.updated { $0.category = newCategory}
+        var resultState: [FeedList.State] = []
+        feedUsecasesMock.given(.fetchLatest(query: .value(newCategoryQuery), willReturn: [.stub()]))
+        sut = .init(query: query, feedUsecases: feedUsecasesMock)
+        feedUsecasesMock.perform(.fetchLatest(query: .value(newCategoryQuery), perform: { _ in
+            expectation.fulfill()
+        }))
+        sut.statePublisher.dropFirst().sink { state in
+            resultState.append(state)
+        }.store(in: &cancellables)
+        await sut.handle(action: .changeCategory(newCategory))
+        await fulfillment(of: [expectation], timeout: 1.0)
+        feedUsecasesMock.verify(.fetchLatest(query: .value(newCategoryQuery)), count: .once)
+        XCTAssertEqual(sut.currentQuery?.category, newCategory)
+        XCTAssertEqual(resultState.last?.selectedCategory, newCategory)
+    }
+}

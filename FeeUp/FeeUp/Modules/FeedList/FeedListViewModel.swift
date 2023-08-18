@@ -75,6 +75,7 @@ final class FeedListViewModel: ViewModel {
 
     @MainActor
     private func changeCategory(_ category: FeedCategory?) {
+        guard currentQuery != nil else { return }
         currentQuery?.update { $0.category = category }
         stateSubject.value.update { $0.selectedCategory = category }
         fetchLatestFeed()
@@ -82,6 +83,7 @@ final class FeedListViewModel: ViewModel {
 
     @MainActor
     private func changeCountry(_ country: FeedCountry) {
+        guard currentQuery != nil else { return }
         currentQuery?.update { $0.country = country }
         stateSubject.value.update { $0.selectedCountry = country }
         fetchLatestFeed()
